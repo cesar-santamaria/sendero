@@ -19,14 +19,14 @@ export default function Navbar() {
     <Drawer
     sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth,boxSizing: 'border-box', color: "#fff", backgroundColor: "#1F2021"} }} variant="permanent" anchor="left">
     <div style={{ display:'flex', justifyContent: 'center', padding:'32px 0'}}>
-      <a href='/home'>
-        <img src="img/sendero.png" style={{ width: "32px", display: 'flex', alignItems: 'center', justifyContent:'center', cursor:"pointer" }} />
+      <a>
+        <img src="img/sendero.png" style={{ width: "32px", display: 'flex', alignItems: 'center', justifyContent:'center' }} />
       </a>
     </div>
     <Divider style={{backgroundColor: "#fff"}}/>
     <List>
       {navbarItems.map((item, index) => (
-        <ListItem key={item.id} onClick={()=>navigate(item.route)} disablePadding>
+        <ListItem key={item.id} onClick={()=>navigate(item.path)} disablePadding>
           <ListItemButton>
             <ListItemIcon sx={{color: "#fff"}}>
               {item.icon}

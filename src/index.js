@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { routePathHelper } from './helpers/routePaths';
+import { navbarItems } from './components/navbar/consts/navbarItems';
 import {
   BrowserRouter,
   Routes,
@@ -15,7 +15,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App/>}>
-        {routePathHelper.map((item) => <Route key={item.id} path={item.path} element={item.element}/>)}
+        {navbarItems.map((item) => <Route key={item.id} path={item.path} element={item.element}/>)}
       </Route>
     </Routes>
   </BrowserRouter>

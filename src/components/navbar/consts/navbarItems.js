@@ -1,24 +1,30 @@
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import Documents from '../../../pages/documents/Documents';
+import Dashboard from '../../../pages/home/Dashboard';
+import Settings from '../../../pages/settings/Settings';
 
 export const navbarItems = [
   {
     id: 0, 
-    icon: <HomeRoundedIcon/>,
-    label: "Home",
-    route: "home",
+    icon: <DashboardCustomizeRoundedIcon/>,
+    label: "Dashboard",
+    path: "dashboard",
+    element: <Dashboard/>
   },
   {
     id: 1, 
     icon: <DescriptionRoundedIcon/>,
     label: "Documents",
-    route: "documents",
+    path: "documents",
+    element: <Documents/>
   },
   {
     id: 2, 
     icon: <SettingsRoundedIcon/>,
     label: "Settings",
-    route: "settings",
+    path: "settings",
+    element: <Settings/>
   },
 ]
