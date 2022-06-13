@@ -7,18 +7,18 @@ export const navbarItems = [
     id: 0, 
     icon: <HomeRoundedIcon/>,
     label: "Home",
-    route: "route",
+    route: "home",
   },
   {
     id: 1, 
     icon: <DescriptionRoundedIcon/>,
     label: "Documents",
-    route: "route",
+    route: "documents",
   },
   {
     id: 2, 
     icon: <SettingsRoundedIcon/>,
     label: "Settings",
-    route: "route",
+    route: "settings",
   },
 ]

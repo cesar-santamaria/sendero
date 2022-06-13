@@ -7,52 +7,31 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { navbarItems } from './consts/navbarItems';
+import { useParams, useNavigate } from "react-router-dom";
 
 
 const drawerWidth = 240;
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <Drawer
-    sx={{
-      width: drawerWidth,
-      flexShrink: 0,
-      '& .MuiDrawer-paper': {
-        width: drawerWidth,
-        boxSizing: 'border-box',
-        color: "#fff",
-        backgroundColor: "#1F2021"
-      },
-    }}
-    variant="permanent"
-    anchor="left"
-  >
-    <div 
-      style={{
-      display:'flex',
-      justifyContent: 'center',
-      padding:'32px 0'
-      }}
-    >
-      <img 
-      src="img/sendero.png" 
-      style={{
-        width: "32px", 
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent:'center'
-      }}
-      />
+    sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth,boxSizing: 'border-box', color: "#fff", backgroundColor: "#1F2021"} }} variant="permanent" anchor="left">
+    <div style={{ display:'flex', justifyContent: 'center', padding:'32px 0'}}>
+      <a href='/home'>
+        <img src="img/sendero.png" style={{ width: "32px", display: 'flex', alignItems: 'center', justifyContent:'center', cursor:"pointer" }} />
+      </a>
     </div>
     <Divider style={{backgroundColor: "#fff"}}/>
     <List>
-      {navbarItems.map((text, index) => (
-        <ListItem key={text.id} disablePadding>
+      {navbarItems.map((item, index) => (
+        <ListItem key={item.id} onClick={()=>navigate(item.route)} disablePadding>
           <ListItemButton>
             <ListItemIcon sx={{color: "#fff"}}>
-              {text.icon}
+              {item.icon}
             </ListItemIcon>
-            <ListItemText primary={text.label} />
+            <ListItemText primary={item.label} />
           </ListItemButton>
         </ListItem>
       ))}
