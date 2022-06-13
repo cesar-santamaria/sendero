@@ -2,7 +2,7 @@ import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomiz
 import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import Documents from '../../../pages/documents/Documents';
-import Dashboard from '../../../pages/home/Dashboard';
+import Dashboard from '../../../pages/dashboard/Dashboard';
 import Settings from '../../../pages/settings/Settings';
 
 export const navbarItems = [

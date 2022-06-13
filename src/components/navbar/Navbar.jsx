@@ -20,7 +20,7 @@ export default function Navbar() {
     sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth,boxSizing: 'border-box', color: "#fff", backgroundColor: "#1F2021"} }} variant="permanent" anchor="left">
     <div style={{ display:'flex', justifyContent: 'center', padding:'32px 0'}}>
       <a>
-        <img src="img/sendero.png" style={{ width: "32px", display: 'flex', alignItems: 'center', justifyContent:'center' }} />
+        <img loading='lazy' src="img/sendero.png" style={{ width: "32px", display: 'flex', alignItems: 'center', justifyContent:'center' }} />
       </a>
     </div>
     <Divider style={{backgroundColor: "#fff"}}/>
