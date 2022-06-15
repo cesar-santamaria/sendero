@@ -1,6 +1,5 @@
 import React from 'react'
-import Grid from '@mui/material/Grid';
-import { Paper } from '@mui/material';
+import { Container, Paper, Box, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { headings } from './headings';
 
@@ -15,15 +14,21 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function DashboardColumn() {
   return (
-    <>
-    {headings.map((item) => (
-      <Grid key={item.id} item xs={12} lg>
-        <Item>
-          <img src={item.tab} alt="color icon used to style columns" style={{width:"12px"}}/>
-            {item.title}
-        </Item>
-      </Grid>
-    ))}
-    </>
+    <Container id="dashboard-container" disableGutters style={{ margin: '0px' }} maxWidth={false}>
+      <Box style={{marginLeft: "210px"}} sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          {headings.map((item) => (
+            <Grid key={item.id} item xs={12} lg>
+              <Paper style={{minHeight: '98vh'}}>
+                <Item>
+                  <img src={item.tab} alt="color icon used to style columns" style={{width:"12px", marginRight:'5px'}}/>
+                  {item.title}
+                </Item>
+              </Paper>
+          </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Container>
   )
 }

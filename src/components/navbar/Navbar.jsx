@@ -21,7 +21,7 @@ export default function Navbar() {
   <Drawer
     sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth,boxSizing: 'border-box', color: "#fff", backgroundColor: "#1F2021"} }} variant="permanent" anchor="left">
     <div style={{ display:'flex', justifyContent: 'center', padding:'32px 0'}}>
-      <img src="img/sendero.png" alt='sendero logo' style={{ width: "32px", display: 'flex' }} />
+      <img src="img/sendero.png" alt='sendero logo' style={{ width: "32px",height: '100%', display: 'flex' }} />
     </div>
     <Divider style={{backgroundColor: "#fff"}}/>
     <List>
@@ -35,9 +35,6 @@ export default function Navbar() {
           </ListItemButton>
         </ListItem>
       ))}
-      {/* <div style={{display:'flex', justifyContent:'center', }}>
-        <LogoutIcon/>
-      </div> */}
     </List>
   </Drawer>
   )
