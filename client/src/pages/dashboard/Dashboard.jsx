@@ -1,6 +1,7 @@
 import * as React from 'react';
-
-import DashboardColumn from './DashboardColumn';
+import Navbar from '../../components/navbar/Navbar';
+import DashboardColumn from './DashboardColumn'
+import { Outlet } from 'react-router-dom';
 
 
 
@@ -9,7 +10,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <DashboardColumn/>
+    <Navbar/>
+    <Outlet/>
     </>
   );
 }
