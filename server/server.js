@@ -19,8 +19,6 @@ mongoose.connection.on('connected', () => {
 // HTTP Request logger
 app.use(morgan('dev'));
 
-// Routes
-app.use("/api/users", userRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello Worldsssssss!');
