@@ -9,17 +9,29 @@ import ListItemText from '@mui/material/ListItemText';
 import { navbarItems } from './consts/navbarItems';
 import { useNavigate } from "react-router-dom";
 
+import Theme from '../ui/Theme';
+
 
 
 const drawerWidth = 210;
 
 
-export default function Navbar() {
+export default function Navbar(props) {
   const navigate = useNavigate();
 
   return (
   <Drawer
-    sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth,boxSizing: 'border-box', color: "#fff", backgroundColor: "#1F2021"} }} variant="permanent" anchor="left">
+  sx={{
+    width: drawerWidth,
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+      width: drawerWidth,
+      boxSizing: 'border-box',
+      backgroundColor:Theme.palette.common.black,
+      color:"#fff"
+    },
+  }}
+   color="primary" variant="permanent" anchor="left">
     <div style={{ display:'flex', justifyContent: 'center', padding:'32px 0'}}>
       <img src="img/sendero.png" alt='sendero logo' style={{ width: "32px",height: '100%', display: 'flex' }} />
     </div>

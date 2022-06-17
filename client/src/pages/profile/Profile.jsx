@@ -13,17 +13,20 @@ import {
   Button,
 } from '@mui/material'
 
+import Theme from '../../components/ui/Theme'
+
 export default function Profile() {
   return (
     <Container
-      maxWidth="md"
-      style={{
-        minHeight: '75vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+    maxWidth="md"
+    sx={{
+      display:"flex",
+      height:"100vh",
+      width: "75%",
+      marginLeft: "350px",
+      justifyContent: "center",
+      alignItems:"center"
+    }}
     >
       <Paper style={{ width: '100%', padding: '25px' }}>
         <Grid container>
@@ -105,6 +108,6 @@ export default function Profile() {
           </Grid>
         </Grid>
       </Paper>
-    </Container>
+  </Container>
   )
 }
