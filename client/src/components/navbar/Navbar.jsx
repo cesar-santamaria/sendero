@@ -11,10 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import Theme from '../ui/Theme';
 
-
-
 const drawerWidth = 210;
-
 
 export default function Navbar(props) {
   const navigate = useNavigate();
@@ -33,7 +30,7 @@ export default function Navbar(props) {
   }}
    color="primary" variant="permanent" anchor="left">
     <div style={{ display:'flex', justifyContent: 'center', padding:'32px 0'}}>
-      <img src="img/sendero.png" alt='sendero logo' style={{ width: "32px",height: '100%', display: 'flex' }} />
+      <img src="img/sendero_icon.svg" alt='sendero logo' style={{ width: "32px",height: '100%', display: 'flex' }} />
     </div>
     <Divider style={{backgroundColor: "#fff"}}/>
     <List>
