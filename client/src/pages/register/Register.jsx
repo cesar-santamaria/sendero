@@ -35,7 +35,7 @@ export default function Register() {
             display: 'flex',
             justifyContent: 'center',
             backgroundColor: Theme.palette.common.black,
-            padding: '50px',
+            padding: '20px 50px',
           }}
         >
           <img src="img/sendero_logo.png" alt="" style={{ width: '240px' }} />
@@ -61,8 +61,14 @@ export default function Register() {
                 label="Last name"
                 variant="outlined"
               />
+              <TextField
+                id="outlined-basic"
+                required
+                label="Email"
+                variant="outlined"
+              />
               <FormControl sx={{ m: 1}} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
+                <InputLabel htmlFor="outlined-adornment-password" required>
                   Password
                 </InputLabel>
                 <OutlinedInput
@@ -71,7 +77,7 @@ export default function Register() {
                 />
               </FormControl>
               <FormControl sx={{ m: 1}} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">
+                <InputLabel htmlFor="outlined-adornment-password" required>
                   Password Confirmation
                 </InputLabel>
                 <OutlinedInput
