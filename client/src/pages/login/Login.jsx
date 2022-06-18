@@ -66,7 +66,7 @@ export default function Login() {
               <Button variant="contained">Login</Button>
               <Link
                 to="/register"
-                style={{ textAlign: 'center', color: '#577590' }}
+                style={{ textAlign: 'center', color: '#39533C' }}
               >
                 Don&apos;t have an account? Register!
               </Link>
