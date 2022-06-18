@@ -7,12 +7,13 @@ import {
 } from "react-router-dom";
 import Dashboard from './pages/dashboard/Dashboard';
 import Register from './pages/register/Register'
+import Login from './pages/login/Login'
 
 function App() {
   return (
     <BrowserRouter>
     <Routes>
-      {/* <Route path="/register" element={<Register/>}/> */}
+      <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
       <Route path="/" element={<Dashboard/>}>
         {navbarItems.map((item) => <Route key={item.id} path={item.path} element={item.element}/>)}
