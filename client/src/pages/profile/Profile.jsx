@@ -22,15 +22,14 @@ export default function Profile() {
     sx={{
       display:"flex",
       height:"100vh",
-      width: "75%",
-      marginLeft: "350px",
+      width: "50%",
       justifyContent: "center",
       alignItems:"center"
     }}
     >
-      <Paper style={{ width: '100%', padding: '25px' }}>
+      <Paper style={{ padding: '50px'}}>
         <Grid container>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} lg>
             <Box display="flex" flexDirection="column" p={2}>
               <Avatar
                 src={`img/profile/c_profile.jpeg`}
@@ -108,6 +107,7 @@ export default function Profile() {
           </Grid>
         </Grid>
       </Paper>
+     
   </Container>
   )
 }

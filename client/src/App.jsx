@@ -1,10 +1,12 @@
 import React from 'react';
 import { navbarItems } from './components/navbar/consts/navbarItems';
+
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
+
 import Dashboard from './pages/dashboard/Dashboard';
 import Register from './pages/register/Register'
 import Login from './pages/login/Login'
