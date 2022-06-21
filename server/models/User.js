@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const UsersSchema = new Schema({
+const UsersSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    require: true,
+    required: true,
   },
   lastName: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
@@ -20,10 +20,10 @@ const UsersSchema = new Schema({
     required: true,
     min: 6,
   },
-  timestamps: {
-    createdAt: 'created_at', // Use `created_at` to store the created date
-    updatedAt: 'updated_at' // and `updated_at` to store the last updated date
-  }
-});
+},
+{
+  timestamps: true
+}
+);
 
 module.exports = mongoose.model('User', UsersSchema);

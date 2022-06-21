@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/users')
+const jobRoutes = require('./routes/jobs')
 require('dotenv').config();
 
 const app = express();
@@ -17,12 +19,16 @@ mongoose.connection.on('connected', () => {
 
 // HTTP Request logger
 app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
+//User Routes
+app.use('/api/users', userRoutes)
 
-app.get('/', (req, res) => {
-  res.send('Hello Worldsssssss!');
-});
+//Job Routes
+app.use('/api/jobs', jobRoutes)
 
+// PORT
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT} 🙉`);
 });
