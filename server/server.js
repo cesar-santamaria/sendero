@@ -15,7 +15,7 @@ console.log("connected to mongoDB 💻")
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose is connected 🦦')
-})
+});
 
 // HTTP Request logger
 app.use(morgan('dev'));
@@ -23,10 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //User Routes
-app.use('/api/users', userRoutes)
+app.use('/api/users', userRoutes);
 
 //Job Routes
-app.use('/api/jobs', jobRoutes)
+app.use('/api/jobs', jobRoutes);
 
 // PORT
 app.listen(PORT, () => {
