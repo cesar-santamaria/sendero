@@ -1,5 +1,7 @@
-const Job = require('../models/Job');
 const router = require('express').Router();
+const Job = require('../models/Job');
+const { protect } = require('../middleware/auth');
+const User = require('../models/User');
 
 // GET
 /* 
@@ -8,8 +10,8 @@ Route: /api/jobs
 access: Private
  */
 
-router.get('/', async (req, res) => {
-  const jobs = await Job.find();
+router.get('/', protect ,async (req, res) => {
+  const jobs = await Job.find({ user: req.user.id });
   if (!jobs) {
     res.status(400);
     throw new Error("No jobs found");
@@ -24,7 +26,7 @@ Route: /api/jobs
 access: Private
  */
 
-router.post('/', async (req, res) => {
+router.post('/', protect ,async (req, res) => {
   if (!req.body.companyName) {
     res.status(400)
     throw new Error();
@@ -42,9 +44,11 @@ router.post('/', async (req, res) => {
       contactName: req.body.contactName,
       contactEmail: req.body.contactEmail,
       resume: req.body.resume,
+      user: req.user.id,
     })
     res.status(200).json(job)
   } catch(error) {
+    console.log("!!KJ!HKJ",req.user.id)
     console.log("ERROR:", error)
   }
 });
@@ -56,12 +60,24 @@ Route: /api/jobs/:id
 access: Private
  */
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', protect ,async (req, res) => {
   const job = await Job.findById(req.params.id);
 
   if (!job) {
     res.status(400)
     throw new Error("Job not found")
+  }
+
+  const user = await User.findById(req.user.id)
+
+  if (!user) {
+    res.status(401)
+    throw new Error("User not found")
+  }
+  // Make sure the logged user matches the goal user
+  if (job.user.toString() !== user.id) {
+    res.status(401)
+    throw new Error("User not authorized")
   }
   const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {new: true})
   res.status(200).json(updatedJob)
@@ -74,12 +90,24 @@ Route: /api/jobs/:id
 access: Private 
 */
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', protect ,async (req, res) => {
   const job = await Job.findByIdAndDelete(req.params.id)
   if (!job) {
     res.status(400)
     throw new Error("Unsuccessful in deleting job")
   }
+  const user = await User.findById(req.user.id)
+
+  if (!user) {
+    res.status(401)
+    throw new Error("User not found")
+  }
+  // Make sure the logged user matches the goal user
+  if (job.user.toString() !== user.id) {
+    res.status(401)
+    throw new Error("User not authorized")
+  }
+  
   res.status(200).json({id: req.params.id})
 });
 
