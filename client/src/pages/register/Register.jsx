@@ -10,6 +10,10 @@ import {
   OutlinedInput,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import { register, reset } from '../../features/auth/authSlice'
 import Theme from '../../components/ui/Theme'
 
 export default function Register() {
@@ -23,6 +27,21 @@ export default function Register() {
 
   const { firstName, lastName, email, password, passwordConfirm } = formData
 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {user, isLoading, isSuccess, isError, message} = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -33,6 +52,21 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
+    if(password !== passwordConfirm){
+      toast.error('Passwords do not match')
+    } else {
+      const userData = {
+        firstName,
+        lastName,
+        email,
+        password,
+      }
+      dispatch(register(userData))
+    }
+  }
+
+  if (isLoading) {
+    return <div>SPINNER!</div>
   }
 
   return (
