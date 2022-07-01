@@ -82,14 +82,9 @@ access: Private
 
 const { protect } = require('../middleware/auth')
 router.get('/me', protect, async (req, res) => {
-  const {_id, firstName, lastName ,email} = await User.findById(req.user.id);
   
-  res.status(200).json({
-    id: _id,
-    firstName,
-    lastName,
-    email
-  })
+  
+  res.status(200).json(req.user)
 })
 
 

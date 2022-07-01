@@ -68,14 +68,13 @@ router.put('/:id', protect ,async (req, res) => {
     throw new Error("Job not found")
   }
 
-  const user = await User.findById(req.user.id)
 
-  if (!user) {
+  if (!req.user) {
     res.status(401)
     throw new Error("User not found")
   }
   // Make sure the logged user matches the goal user
-  if (job.user.toString() !== user.id) {
+  if (job.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error("User not authorized")
   }
@@ -96,14 +95,14 @@ router.delete('/:id', protect ,async (req, res) => {
     res.status(400)
     throw new Error("Unsuccessful in deleting job")
   }
-  const user = await User.findById(req.user.id)
 
-  if (!user) {
+
+  if (!req.user) {
     res.status(401)
     throw new Error("User not found")
   }
   // Make sure the logged user matches the goal user
-  if (job.user.toString() !== user.id) {
+  if (job.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error("User not authorized")
   }
