@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import {
   Box,
   Paper,
@@ -8,11 +8,32 @@ import {
   Button,
   InputLabel,
   OutlinedInput,
-  
 } from '@mui/material'
+import { Link } from 'react-router-dom'
 import Theme from '../../components/ui/Theme'
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  })
+
+  const { firstName, lastName, email, password, passwordConfirm } = formData
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(formData)
+  }
 
   return (
     <Box
@@ -40,55 +61,80 @@ export default function Register() {
         >
           <img src="img/sendero_logo.png" alt="" style={{ width: '240px' }} />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            '& > :not(style)': { m: 3 },
-          }}
-        >
-          <FormControl>
-            <Stack spacing={1.5}>
-              <TextField
-                id="outlined-basic"
-                required
-                label="First name"
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-basic"
-                required
-                label="Last name"
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-basic"
-                required
-                label="Email"
-                variant="outlined"
-              />
-              <FormControl sx={{ m: 1}} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password" required>
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  label="Password"
+        <form onSubmit={handleSubmit}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              '& > :not(style)': { m: 3 },
+            }}
+          >
+            <FormControl>
+              <Stack spacing={1.5}>
+                <TextField
+                  id="outlined-basic"
+                  required
+                  label="First name"
+                  variant="outlined"
+                  name="firstName"
+                  value={firstName}
+                  onChange={onChange}
                 />
-              </FormControl>
-              <FormControl sx={{ m: 1}} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password" required>
-                  Password Confirmation
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  label="Password Confirmation"
+                <TextField
+                  id="outlined-basic"
+                  required
+                  label="Last name"
+                  variant="outlined"
+                  name="lastName"
+                  value={lastName}
+                  onChange={onChange}
                 />
-              </FormControl>
-              <Button variant="contained">Register</Button>
-            </Stack>
-          </FormControl>
-        </Box>
+                <TextField
+                  id="outlined-basic"
+                  required
+                  label="Email"
+                  variant="outlined"
+                  name="email"
+                  value={email}
+                  onChange={onChange}
+                />
+                <FormControl sx={{ m: 1 }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password" required>
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    name="password"
+                    label="Password"
+                    value={password}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1 }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password" required>
+                    Password Confirmation
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    name="passwordConfirm"
+                    label="Password Confirmation"
+                    value={passwordConfirm}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <Button type="submit" variant="contained">
+                  Register
+                </Button>
+                <Link
+                  to="/login"
+                  style={{ textAlign: 'center', color: '#39533C' }}
+                >
+                  Already have an account? Login!
+                </Link>
+              </Stack>
+            </FormControl>
+          </Box>
+        </form>
       </Paper>
     </Box>
   )
