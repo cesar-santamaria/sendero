@@ -7,7 +7,6 @@ import Profile from '../../../pages/profile/Profile';
 import Stats from '../../../pages/stats/Stats';
 import Calendar from '../../../pages/calendar/Calendar';
 import Search from '../../../pages/search/Search';
-import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardColumn from '../../../pages/dashboard/DashboardColumn';
 
 export const navbarItems = [
@@ -45,11 +44,5 @@ export const navbarItems = [
     label: "Search",
     path: "search",
     element: <Search/>
-  },
-  {
-    id: 5, 
-    icon: <LogoutIcon/>,
-    label: "Logout",
-    path: "logout",
   },
 ]

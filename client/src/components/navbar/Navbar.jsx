@@ -8,19 +8,28 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
-  CardMedia
+  CardMedia,
+  Typography,
 } from '@mui/material'
-
+import LogoutIcon from '@mui/icons-material/Logout'
 import { navbarItems } from './consts/navbarItems'
 import { useNavigate } from 'react-router-dom'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../../features/auth/authSlice'
 import Theme from '../ui/Theme'
 
 const drawerWidth = 210
 
 export default function Navbar(props) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {user} = useSelector((state) => state.auth)
 
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/login')
+  }
   return (
     <Drawer
       sx={{
@@ -38,7 +47,11 @@ export default function Navbar(props) {
       anchor="left"
     >
       <Box
-        style={{ display: 'flex', justifyContent: 'center', padding: '32px 80px' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '32px 80px',
+        }}
       >
         <CardMedia
           component="img"
@@ -48,7 +61,7 @@ export default function Navbar(props) {
           alt="sendero logo"
         />
       </Box>
-      <Divider style={{ backgroundColor: "#F7FBFF" }} />
+      <Divider style={{ backgroundColor: '#F7FBFF' }} />
       <List>
         {navbarItems.map((item, index) => (
           <ListItem key={item.id} onClick={() => navigate(item.path)}>
@@ -60,6 +73,12 @@ export default function Navbar(props) {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItemButton onClick={handleLogout}>
+          <ListItemIcon sx={{ color: '#fff', marginLeft: '20px' }}>
+            <LogoutIcon />
+            <Typography sx={{ marginLeft: '28px' }}>Logout</Typography>
+          </ListItemIcon>
+        </ListItemButton>
       </List>
     </Drawer>
   )
