@@ -69,12 +69,12 @@ export default function Navbar(props) {
               <ListItemIcon sx={{ color: '#fff', padding: '0' }}>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.label} />
+              <ListItemText primary={item.label}/>
             </ListItemButton>
           </ListItem>
         ))}
         <ListItemButton onClick={handleLogout}>
-          <ListItemIcon sx={{ color: '#fff', marginLeft: '20px' }}>
+          <ListItemIcon sx={{ color: '#fff', marginLeft: '20px', marginTop: '80px' }}>
             <LogoutIcon />
             <Typography sx={{ marginLeft: '28px' }}>Logout</Typography>
           </ListItemIcon>

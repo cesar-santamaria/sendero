@@ -11,6 +11,8 @@ import {
   Button,
   MenuItem,
 } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { createJob } from '../../features/jobs/jobSlice'
 import Select from '@mui/material/Select'
 
 export default function JobForm() {
@@ -23,6 +25,7 @@ export default function JobForm() {
   })
 
   const { companyName, jobTitle, salary, location, status } = formData
+  const dispatch = useDispatch()
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -39,7 +42,14 @@ export default function JobForm() {
       location,
       status,
     }
-    console.log(jobData)
+    dispatch(createJob(jobData))
+    setFormData({
+      companyName: '',
+      jobTitle: '',
+      salary: '',
+      location: '',
+      status: '',
+    })
   }
   return (
     <Container

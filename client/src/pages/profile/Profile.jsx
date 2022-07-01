@@ -12,22 +12,23 @@ import {
   Input,
   Button,
 } from '@mui/material'
-
-import Theme from '../../components/ui/Theme'
+import { useSelector } from 'react-redux'
 
 export default function Profile() {
+  const { user } = useSelector((state) => state.auth)
+  
   return (
     <Container
-    maxWidth="md"
-    sx={{
-      display:"flex",
-      height:"100vh",
-      width: "50%",
-      justifyContent: "center",
-      alignItems:"center"
-    }}
+      maxWidth="md"
+      sx={{
+        display: 'flex',
+        height: '100vh',
+        width: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
-      <Paper style={{ padding: '50px'}}>
+      <Paper style={{ padding: '50px' }}>
         <Grid container>
           <Grid item xs={12} lg>
             <Box display="flex" flexDirection="column" p={2}>
@@ -40,8 +41,7 @@ export default function Profile() {
                 variant="h5"
                 style={{ marginTop: '5px', fontWeight: '400' }}
               >
-                {' '}
-                Cesar Santamaria{' '}
+                { `${user.firstName} ${user.lastName}` }
               </Typography>
               <Typography
                 variant="h6"
@@ -69,21 +69,21 @@ export default function Profile() {
               <FormControl>
                 <TextField
                   label="First Name"
-                  value="Cesar"
+                  value={user.firstName}
                   style={{ marginBottom: '10px' }}
                 />
               </FormControl>
               <FormControl>
                 <TextField
                   label="Last Name"
-                  value="Santa"
+                  value={user.lastName}
                   style={{ marginBottom: '10px' }}
                 />
               </FormControl>
               <FormControl>
                 <TextField
                   label="Email"
-                  value="ces@gmail.com"
+                  value={user.email}
                   style={{ marginBottom: '10px' }}
                 />
               </FormControl>
@@ -92,7 +92,7 @@ export default function Profile() {
                 <InputLabel>Password</InputLabel>
                 <Input label="Password" />
               </FormControl>
-              <FormControl style={{marginTop: '10px'}}>
+              <FormControl style={{ marginTop: '10px' }}>
                 <InputLabel>Password Confirmation</InputLabel>
                 <Input label="Password Confirmation" />
               </FormControl>
@@ -107,7 +107,6 @@ export default function Profile() {
           </Grid>
         </Grid>
       </Paper>
-     
-  </Container>
+    </Container>
   )
 }
