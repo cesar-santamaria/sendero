@@ -28,9 +28,23 @@ const getJobs = async (token) => {
   return response.data
 }
 
+// delete jobs
+const deleteJobs = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.delete(API_URL + id, config)
+
+  return response.data
+}
+
 export const jobService = {
   createJob,
   getJobs,
+  deleteJobs
 }
 
 export default jobService

@@ -29,12 +29,31 @@ export const createJob = createAsyncThunk(
 )
 
 // get user jobs
-export const getJobs = createAsyncThunk(
+export const getJob = createAsyncThunk(
   'jobs/getAll',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
       return await jobService.getJobs(token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// delete job
+export const deleteJob = createAsyncThunk(
+  'jobs/delete',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await jobService.deleteJobs(id, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -68,15 +87,28 @@ export const jobSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
-      .addCase(getJobs.pending, (state) => {
+      .addCase(getJob.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getJobs.fulfilled, (state, action) => {
+      .addCase(getJob.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
         state.jobs = action.payload
       })
-      .addCase(getJobs.rejected, (state, action) => {
+      .addCase(getJob.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteJob.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteJob.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.jobs = state.jobs.filter((job) => job._id !== action.payload.id)
+      })
+      .addCase(deleteJob.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getJobs } from '../../features/jobs/jobSlice'
-
+import jobSlice, { getJobs } from '../../features/jobs/jobSlice'
+import { deleteJob } from '../../features/jobs/jobSlice'
 import {
   Card,
   CardHeader,
@@ -61,11 +61,6 @@ export default function JobItem(props) {
     <Card style={{ marginTop: '25px' }}>
       <CardHeader
         avatar={<Avatar src="https://logo.clearbit.com/spotify.com" />}
-        action={
-          <IconButton aria-label="edit">
-            <EditIcon />
-          </IconButton>
-        }
         title={company}
         subheader={jobTitle}
       />
@@ -100,7 +95,10 @@ export default function JobItem(props) {
           <Typography paragraph>
             {jobLink}
           </Typography>
-            <Button sx={{backgroundColor: "#ff817b"}} fullWidth>Delete</Button>
+          <div style={{display: 'flex'}}>
+            <Button sx={{backgroundColor: "#ff817b", marginRight: '5px'}} fullWidth>Edit</Button>
+            <Button sx={{backgroundColor: "#ff817b"}} onClick={() => dispatch(deleteJob(id))} fullWidth>Delete</Button>
+          </div>
         </CardContent>
       </Collapse>
     </Card>

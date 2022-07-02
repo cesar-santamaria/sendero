@@ -1,19 +1,10 @@
 import {useEffect} from 'react'
-import { Container, Paper, Box, Grid } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { Container, Box, Grid } from '@mui/material'
 import JobItem from '../../components/jobs/JobItem'
-import { getJobs } from '../../features/jobs/jobSlice'
+import { getJob } from '../../features/jobs/jobSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import DashboardColumnHeading from './DashboardColumnHeading'
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body1,
-  padding: theme.spacing(2),
-  textAlign: 'center',
-  fontWeight: 'bold',
-  color: theme.palette.text.secondary,
-}))
 
 export default function DashboardColumn() {
   const dispatch = useDispatch()
@@ -23,7 +14,7 @@ export default function DashboardColumn() {
   })
 
   useEffect(() => {
-    dispatch(getJobs());
+    dispatch(getJob());
   }, [dispatch]);
 
   const jobItems = jobs.map((job) => (
