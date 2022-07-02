@@ -17,6 +17,8 @@ export default function DashboardColumn() {
     dispatch(getJob());
   }, [dispatch]);
 
+  
+
   const jobItems = jobs.map((job) => (
   <JobItem
       key={job._id}
