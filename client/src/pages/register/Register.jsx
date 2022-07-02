@@ -51,7 +51,6 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
     if(password !== passwordConfirm){
       toast.error('Passwords do not match')
     } else {

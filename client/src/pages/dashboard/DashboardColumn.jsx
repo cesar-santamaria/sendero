@@ -1,8 +1,10 @@
-import React from 'react'
+import {useEffect} from 'react'
 import { Container, Paper, Box, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import Job from '../../components/jobs/JobItem'
 import JobItem from '../../components/jobs/JobItem'
+import { getJobs } from '../../features/jobs/jobSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import DashboardColumnHeading from './DashboardColumnHeading'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -14,6 +16,35 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 export default function DashboardColumn() {
+  const dispatch = useDispatch()
+
+  const { jobs, isLoading, isError, message } = useSelector((state) => {
+    return state.jobs
+  })
+
+  useEffect(() => {
+    dispatch(getJobs());
+  }, [dispatch]);
+
+  const jobItems = jobs.map((job) => (
+  <JobItem
+      key={job._id}
+      id={job._id}
+      company={job.companyName}
+      jobTitle={job.jobTitle}
+      status={job.status}
+      salary={job.salary}
+      location={job.location}
+      jobLink={job.jobLink}
+      calendar={job.calendar}
+      details={job.details}
+      contactName={job.contactName}
+      contactEmail={job.contactEmail}
+      resume={job.resume}
+    />
+  )
+)
+
   return (
     <Container
       id="dashboard-container"
@@ -23,57 +54,11 @@ export default function DashboardColumn() {
     >
       <Box style={{ marginLeft: '210px' }} sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-            <Grid item xs={12} lg>
-              <Item>
-                <img
-                  src="img/tabs/wishlist.png"
-                  alt="color icon used to style columns"
-                  style={{ width: '12px', marginRight: '5px' }}
-                />
-                WISHLIST
-              </Item>
-              <JobItem/>
-            </Grid>
-            <Grid item xs={12} lg>
-              <Item>
-                <img
-                  src="img/tabs/applied.png"
-                  alt="color icon used to style columns"
-                  style={{ width: '12px', marginRight: '5px' }}
-                />
-                APPLIED
-              </Item>
-            </Grid>
-            <Grid item xs={12} lg>
-              <Item>
-                <img
-                  src="img/tabs/interview.png"
-                  alt="color icon used to style columns"
-                  style={{ width: '12px', marginRight: '5px' }}
-                />
-                INTERVIEW
-              </Item>
-            </Grid>
-            <Grid item xs={12} lg>
-              <Item>
-                <img
-                  src="/img/tabs/offer.png"
-                  alt="color icon used to style columns"
-                  style={{ width: '12px', marginRight: '5px' }}
-                />
-                OFFER
-              </Item>
-            </Grid>
-            <Grid item xs={12} lg>
-              <Item>
-                <img
-                  src="/img/tabs/rejected.png"
-                  alt="color icon used to style columns"
-                  style={{ width: '12px', marginRight: '5px' }}
-                />
-                REJECTED
-              </Item>
-            </Grid>
+            <DashboardColumnHeading index={0} job={jobItems.filter((job)=>job.props.status === "interested")} title="INTERESTED"/>
+            <DashboardColumnHeading index={1} job={jobItems.filter((job)=>job.props.status === "applied")} title="APPLIED"/>
+            <DashboardColumnHeading index={2} job={jobItems.filter((job)=>job.props.status === "interview")} title="INTERVIEW"/>
+            <DashboardColumnHeading index={3} job={jobItems.filter((job)=>job.props.status === "offer")} title="OFFER"/>
+            <DashboardColumnHeading index={4} job={jobItems.filter((job)=>job.props.status === "rejected")} title="REJECTED"/>
         </Grid>
       </Box>
     </Container>

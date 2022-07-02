@@ -28,7 +28,7 @@ const ExpandMore = styled((props) => {
   }),
 }))
 
-export default function JobItem() {
+export default function JobItem(props) {
   const [expanded, setExpanded] = useState(false)
   const dispatch = useDispatch()
 
@@ -36,16 +36,23 @@ export default function JobItem() {
     return state.jobs
   })
 
+  const {
+    id,
+    company,
+    jobTitle,
+    salary,
+    location,
+    jobLink,
+    calendar,
+    details,
+    contactName,
+    contactEmail,
+    resume
+  } = props
+
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
-
-  useEffect(() => {
-    if (isError) {
-      console.log(message)
-    }
-    dispatch(getJobs())
-  }, [isError, message, dispatch])
 
   if (isLoading) {
     return <div>SPINNERRRRRR!!!</div>
@@ -59,8 +66,8 @@ export default function JobItem() {
             <EditIcon />
           </IconButton>
         }
-        title="Company Name"
-        subheader="Job Title"
+        title={company}
+        subheader={jobTitle}
       />
       <ExpandMore
         expand={expanded}
@@ -72,30 +79,26 @@ export default function JobItem() {
       </ExpandMore>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
           <Typography paragraph>
-            salary
+            {salary}
           </Typography>
           <Typography paragraph>
-            location
+            {location}
           </Typography>
           <Typography paragraph>
-            location
+            {details}
           </Typography>
           <Typography paragraph>
-            details
+            {contactName}
           </Typography>
           <Typography paragraph>
-            contact name
+            {contactEmail}
           </Typography>
           <Typography paragraph>
-            contact email
+            {resume}
           </Typography>
           <Typography paragraph>
-            resume link
-          </Typography>
-          <Typography paragraph>
-            created at
+            {jobLink}
           </Typography>
             <Button sx={{backgroundColor: "#ff817b"}} fullWidth>Delete</Button>
         </CardContent>
@@ -103,14 +106,3 @@ export default function JobItem() {
     </Card>
   )
 }
-
-/* 
-salary
-location
-jobLink
-details
-contactName
-contactEmail
-resume
-createdAt
-*/
