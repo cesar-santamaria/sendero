@@ -1,15 +1,17 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded'
-import { IconButton, Button } from '@mui/material'
+import { IconButton, Button, FormControl, MenuItem } from '@mui/material'
 import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import InputAdornment from '@mui/material/InputAdornment'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteJob, editJob } from '../../features/jobs/jobSlice'
+import { useEffect } from 'react'
+import Select from '@mui/material/Select'
 
 const style = {
   position: 'absolute',
@@ -26,21 +28,34 @@ const style = {
 export default function JobsModal(props) {
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({
-    companyName: props.company || "",
-    jobTitle: props.jobTitle || "",
-    salary: props.salary || "",
-    location: props.location || "",
-    calendar: props.calendar || "",
-    jobLink: props.jobLink || "",
-    resume: props.resume || "",
-    contactName: props.contactName || "",
-    contactEmail: props.contactEmail || "",
-    details: props.details || "",
+    companyName: props.company || '',
+    jobTitle: props.jobTitle || '',
+    salary: props.salary || '',
+    location: props.location || '',
+    calendar: props.calendar || '',
+    jobLink: props.jobLink || '',
+    resume: props.resume || '',
+    contactName: props.contactName || '',
+    contactEmail: props.contactEmail || '',
+    details: props.details || '',
   })
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const dispatch = useDispatch()
-  const { companyName, jobTitle, salary, location, status, date, jobLink, calendar, resume, contactEmail, contactName, details } = formData
+  const {
+    companyName,
+    jobTitle,
+    salary,
+    location,
+    status,
+    date,
+    jobLink,
+    calendar,
+    resume,
+    contactEmail,
+    contactName,
+    details,
+  } = formData
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -61,11 +76,11 @@ export default function JobsModal(props) {
       resume,
       contactName,
       contactEmail,
-      details
+      details,
+      status,
     }
-    dispatch(editJob({id:props.id , jobData}))
-    console.log({id:props.id , jobData})
-
+    dispatch(editJob({ id: props.id, jobData }))
+    console.log({ id: props.id, jobData })
   }
 
   return (
@@ -83,11 +98,14 @@ export default function JobsModal(props) {
           <Typography variant="h6" component="h2">
             Edit
           </Typography>
-          <form style={{ display: 'flex', justifyContent: 'space-evenly' }} onSubmit={handleSubmit}>
+          <form
+            style={{ display: 'flex', justifyContent: 'space-evenly' }}
+            onSubmit={handleSubmit}
+          >
             <div style={{ flexDirection: 'row' }}>
               <Input
                 id="standard-basic"
-                name='companyName'
+                name="companyName"
                 label="company"
                 variant="standard"
                 value={companyName}
@@ -96,7 +114,7 @@ export default function JobsModal(props) {
               />
               <TextField
                 id="standard-basic"
-                name='jobTitle'
+                name="jobTitle"
                 label="job title"
                 variant="standard"
                 value={jobTitle}
@@ -112,7 +130,7 @@ export default function JobsModal(props) {
                 <TextField
                   sx={{ mt: 1, mr: 2, width: '100px' }}
                   id="standard-adornment-amount"
-                  name='salary'
+                  name="salary"
                   label="salary"
                   variant="standard"
                   value={salary}
@@ -125,7 +143,7 @@ export default function JobsModal(props) {
                 />
                 <TextField
                   id="standard-basic"
-                  name='location'
+                  name="location"
                   label="location"
                   variant="standard"
                   value={location}
@@ -134,14 +152,17 @@ export default function JobsModal(props) {
                 />
                 <TextField
                   id="standard-basic"
-                  name='calendar'
+                  name="calendar"
                   label="date"
                   variant="standard"
                   onChange={onChange}
-                  value={calendar ? new Date(calendar).toLocaleString(
-                    'en-US',
-                    { dateStyle: 'medium' }
-                  ) : ""}
+                  value={
+                    calendar
+                      ? new Date(calendar).toLocaleString('en-US', {
+                          dateStyle: 'medium',
+                        })
+                      : ''
+                  }
                   sx={{ mt: 1, mr: 2, width: '100px' }}
                 />
               </div>
@@ -154,7 +175,7 @@ export default function JobsModal(props) {
               >
                 <TextField
                   id="standard-basic"
-                  name='jobLink'
+                  name="jobLink"
                   label="job link"
                   variant="standard"
                   value={jobLink}
@@ -163,7 +184,7 @@ export default function JobsModal(props) {
                 />
                 <TextField
                   id="standard-basic"
-                  name='resume'
+                  name="resume"
                   label="resume link"
                   variant="standard"
                   value={resume}
@@ -173,7 +194,7 @@ export default function JobsModal(props) {
               </div>
               <TextField
                 id="standard-basic"
-                name='contactName'
+                name="contactName"
                 label="contact name"
                 variant="standard"
                 value={contactName}
@@ -182,7 +203,7 @@ export default function JobsModal(props) {
               />
               <TextField
                 id="standard-basic"
-                name='contactEmail'
+                name="contactEmail"
                 label="contact email"
                 variant="standard"
                 value={contactEmail}
@@ -191,7 +212,7 @@ export default function JobsModal(props) {
               />
               <TextField
                 id="standard-basic"
-                name='details'
+                name="details"
                 label="details"
                 variant="standard"
                 multiline
@@ -201,6 +222,27 @@ export default function JobsModal(props) {
                 onChange={onChange}
                 sx={{ mt: 1, mr: 2 }}
               />
+              <FormControl
+                variant="standard"
+                fullWidth
+                style={{ marginTop: '20px' }}
+              >
+                <InputLabel>Status</InputLabel>
+                <Select
+                  value={status}
+                  name="status"
+                  label="Status"
+                  defaultValue="status"
+                  onChange={onChange}
+                  required
+                >
+                  <MenuItem value={'interested'}>Interested</MenuItem>
+                  <MenuItem value={'applied'}>Applied</MenuItem>
+                  <MenuItem value={'interview'}>Interview</MenuItem>
+                  <MenuItem value={'offer'}>Offer</MenuItem>
+                  <MenuItem value={'rejected'}>Rejected</MenuItem>
+                </Select>
+              </FormControl>
               <div
                 style={{
                   marginTop: '20px',
@@ -222,7 +264,7 @@ export default function JobsModal(props) {
                   Delete
                 </Button>
                 <Button
-                type='submit'
+                  type="submit"
                   sx={{
                     width: '45%',
                     border: '1px solid #475541',
