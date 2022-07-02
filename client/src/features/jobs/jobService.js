@@ -41,10 +41,23 @@ const deleteJobs = async (id, token) => {
   return response.data
 }
 
+// edit existing job
+const editJobs = async (id, jobData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.put(API_URL + id, jobData, config)
+  console.log(response.data)
+  return response.data
+}
+
 export const jobService = {
   createJob,
   getJobs,
-  deleteJobs
+  deleteJobs,
+  editJobs
 }
 
 export default jobService

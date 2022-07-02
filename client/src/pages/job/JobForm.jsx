@@ -21,10 +21,28 @@ export default function JobForm() {
     jobTitle: '',
     salary: '',
     location: '',
+    calendar: '',
+    jobLink: '',
+    resume: '',
+    contactName: '',
+    contactEmail: '',
+    details: '',
     status: '',
   })
 
-  const { companyName, jobTitle, salary, location, status } = formData
+  const {
+    companyName,
+    jobTitle,
+    salary,
+    location,
+    calendar,
+    jobLink,
+    resume,
+    contactName,
+    contactEmail,
+    details,
+    status,
+  } = formData
   const dispatch = useDispatch()
 
   const onChange = (e) => {
@@ -40,6 +58,12 @@ export default function JobForm() {
       jobTitle,
       salary,
       location,
+      calendar,
+      jobLink,
+      resume,
+      contactName,
+      contactEmail,
+      details,
       status,
     }
     dispatch(createJob(jobData))
@@ -48,6 +72,12 @@ export default function JobForm() {
       jobTitle: '',
       salary: '',
       location: '',
+      calendar: '',
+      jobLink: '',
+      resume: '',
+      contactName: '',
+      contactEmail: '',
+      details: '',
       status: '',
     })
   }
@@ -71,40 +101,94 @@ export default function JobForm() {
               </Typography>
               <form onSubmit={handleSubmit}>
                 <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>Company</InputLabel>
+                  <InputLabel>company</InputLabel>
                   <Input
                     name="companyName"
-                    label="Company"
+                    label="company"
                     value={companyName}
                     onChange={onChange}
                     required
                   />
                 </FormControl>
                 <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>Job Title</InputLabel>
+                  <InputLabel>job title</InputLabel>
                   <Input
                     name="jobTitle"
-                    label="Job Title"
+                    label="job title"
                     value={jobTitle}
                     onChange={onChange}
                     required
                   />
                 </FormControl>
                 <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>Salary</InputLabel>
+                  <InputLabel>salary</InputLabel>
                   <Input
                     name="salary"
-                    label="Salary"
+                    label="salary"
                     value={salary}
                     onChange={onChange}
                   />
                 </FormControl>
                 <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>Location</InputLabel>
+                  <InputLabel>location</InputLabel>
                   <Input
                     name="location"
-                    label="Location"
+                    label="location"
                     value={location}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl style={{ marginTop: '20px' }}>
+                  <InputLabel>date</InputLabel>
+                  <Input
+                    name="calendar"
+                    label="calendar"
+                    value={calendar}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl style={{ marginTop: '20px' }}>
+                  <InputLabel>job link</InputLabel>
+                  <Input
+                    name="jobLink"
+                    label="jobLink"
+                    value={jobLink}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl style={{ marginTop: '20px' }}>
+                  <InputLabel>resume</InputLabel>
+                  <Input
+                    name="resume"
+                    label="resume"
+                    value={resume}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl style={{ marginTop: '20px' }}>
+                  <InputLabel>contact name</InputLabel>
+                  <Input
+                    name="contactName"
+                    label="contactName"
+                    value={contactName}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl style={{ marginTop: '20px' }}>
+                  <InputLabel>contact email</InputLabel>
+                  <Input
+                    name="contactEmail"
+                    label="contactEmail"
+                    value={contactEmail}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <FormControl style={{ marginTop: '20px' }}>
+                  <InputLabel>details</InputLabel>
+                  <Input
+                    name="details"
+                    label="details"
+                    value={details}
                     onChange={onChange}
                   />
                 </FormControl>
