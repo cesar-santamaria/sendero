@@ -30,7 +30,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 export default function JobForm() {
   const [open, setOpen] = useState(false)
-  const [logo, setLogo] = useState('')
+  const [logo, setLogo] = useState("img/sendero_job_icon.png" || "")
   const [formData, setFormData] = useState({
     companyName: '',
     jobTitle: '',
