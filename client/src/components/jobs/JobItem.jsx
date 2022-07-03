@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
+import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress from '@mui/material/LinearProgress';
+
+
 import { Card, CardHeader, Avatar } from '@mui/material'
 import JobsModal from './JobsModal'
 
@@ -52,8 +56,9 @@ export default function JobItem(props) {
   }, [company])
 
   if (isLoading) {
-    return <div>SPINNERRRRRR!!!</div>
+    return <LinearProgress />
   }
+  
   return (
     <Card style={{ marginTop: '25px' }} onClick={handleOpen}>
       <CardHeader

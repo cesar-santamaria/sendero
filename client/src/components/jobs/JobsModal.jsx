@@ -8,9 +8,8 @@ import { IconButton, Button, FormControl, MenuItem } from '@mui/material'
 import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import InputAdornment from '@mui/material/InputAdornment'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { deleteJob, editJob } from '../../features/jobs/jobSlice'
-import { useEffect } from 'react'
 import Select from '@mui/material/Select'
 
 const style = {
@@ -47,14 +46,13 @@ export default function JobsModal(props) {
     jobTitle,
     salary,
     location,
-    status,
-    date,
     jobLink,
     calendar,
     resume,
     contactEmail,
     contactName,
     details,
+    status,
   } = formData
 
   const onChange = (e) => {
@@ -103,7 +101,7 @@ export default function JobsModal(props) {
             onSubmit={handleSubmit}
           >
             <div style={{ flexDirection: 'row' }}>
-              <Input
+              <TextField
                 id="standard-basic"
                 name="companyName"
                 label="company"

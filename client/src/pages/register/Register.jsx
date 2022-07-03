@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   Box,
   Paper,
@@ -8,13 +10,16 @@ import {
   Button,
   InputLabel,
   OutlinedInput,
+  Grow,
+  LinearProgress,
+  InputAdornment,
+  IconButton,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import {useNavigate} from 'react-router-dom'
-import {toast} from 'react-toastify'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { register, reset } from '../../features/auth/authSlice'
+import {toast} from 'react-toastify'
 import Theme from '../../components/ui/Theme'
+
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -23,9 +28,10 @@ export default function Register() {
     email: '',
     password: '',
     passwordConfirm: '',
+    showPassword: false,
   })
 
-  const { firstName, lastName, email, password, passwordConfirm } = formData
+  const { firstName, lastName, email, password, passwordConfirm, showPassword } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -49,6 +55,13 @@ export default function Register() {
     }))
   }
 
+  const handleShowPassword = () => {
+    setFormData({
+      ...formData,
+      showPassword: !showPassword,
+    })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if(password !== passwordConfirm){
@@ -64,11 +77,8 @@ export default function Register() {
     }
   }
 
-  if (isLoading) {
-    return <div>SPINNER!</div>
-  }
-
   return (
+    <Grow in={true} {...{ timeout: 1000 }}>
     <Box
       sx={{
         display: 'flex',
@@ -89,7 +99,7 @@ export default function Register() {
             display: 'flex',
             justifyContent: 'center',
             backgroundColor: Theme.palette.common.black,
-            padding: '20px 50px',
+            padding: '0 50px',
           }}
         >
           <img src="img/sendero_logo.png" alt="" style={{ width: '240px' }} />
@@ -137,10 +147,26 @@ export default function Register() {
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
+                    type={showPassword ? 'text' : 'password'}
                     name="password"
                     label="Password"
                     value={password}
                     onChange={onChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
                 </FormControl>
                 <FormControl sx={{ m: 1 }} variant="outlined">
@@ -149,10 +175,26 @@ export default function Register() {
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
+                    type={showPassword ? 'text' : 'password'}
                     name="passwordConfirm"
                     label="Password Confirmation"
                     value={passwordConfirm}
                     onChange={onChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
                 </FormControl>
                 <Button type="submit" variant="contained">
@@ -168,7 +210,9 @@ export default function Register() {
             </FormControl>
           </Box>
         </form>
+        {isLoading && <LinearProgress/>}
       </Paper>
     </Box>
+    </Grow>
   )
 }

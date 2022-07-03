@@ -17,13 +17,15 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../../features/auth/authSlice'
 import Theme from '../ui/Theme'
+import { Grow } from '@mui/material'
+import { width } from '@mui/system'
 
 const drawerWidth = 210
 
 export default function Navbar(props) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {user} = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth)
 
   const handleLogout = () => {
     dispatch(logout())
@@ -53,13 +55,14 @@ export default function Navbar(props) {
           padding: '32px 80px',
         }}
       >
-        <CardMedia
-          component="img"
-          height="100%"
-          width="32px"
-          image="img/sendero_icon.svg"
-          alt="sendero logo"
-        />
+        <Grow in={true} {...{ timeout: 1500 }}>
+          <CardMedia
+            component="img"
+            width="32px"
+            image="img/sendero_icon.svg"
+            alt="sendero logo"
+          />
+        </Grow>
       </Box>
       <Divider style={{ backgroundColor: '#F7FBFF' }} />
       <List>
@@ -69,12 +72,14 @@ export default function Navbar(props) {
               <ListItemIcon sx={{ color: '#fff', padding: '0' }}>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.label}/>
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
         <ListItemButton onClick={handleLogout}>
-          <ListItemIcon sx={{ color: '#fff', marginLeft: '20px', marginTop: '80px' }}>
+          <ListItemIcon
+            sx={{ color: '#fff', marginLeft: '20px', marginTop: '80px' }}
+          >
             <LogoutIcon />
             <Typography sx={{ marginLeft: '28px' }}>Logout</Typography>
           </ListItemIcon>
