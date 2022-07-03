@@ -14,6 +14,7 @@ import {
   Button,
 } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
+import EventIcon from '@mui/icons-material/Event'
 import { navbarItems } from './consts/navbarItems'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -104,6 +105,20 @@ export default function Navbar(props) {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItemButton>
+          <ListItemIcon
+            sx={{ color: '#fff', marginLeft: '17px', marginTop: '20px' }}
+            onClick={() => {
+              window.open(
+                'https://calendar.google.com/calendar/u/0/r',
+                '_blank'
+              )
+            }}
+          >
+            <EventIcon />
+            <Typography sx={{ marginLeft: '28px' }}>Calendar</Typography>
+          </ListItemIcon>
+        </ListItemButton>
         <ListItemButton onClick={handleOpen}>
           <ListItemIcon
             sx={{ color: '#fff', marginLeft: '20px', marginTop: '80px' }}
@@ -119,35 +134,47 @@ export default function Navbar(props) {
           aria-describedby="child-modal-description"
         >
           <Box sx={{ ...style, width: 300 }}>
-            <Typography sx={{mt: 3}} variant='h5' id="child-modal-description">Are you sure you want to logout?</Typography>
-            <div style={{display: 'flex',justifyContent: 'space-evenly', marginTop: '30px'}}>
-            <Button
-              onClick={handleClose}
-              sx={{
-                width: '40%',
-                border: '1px solid #932E2E',
-                '&:hover': {
-                  color: '#fff',
-                  backgroundColor: '#932E2E',
-                },
+            <Typography
+              sx={{ mt: 3 }}
+              variant="h5"
+              id="child-modal-description"
+            >
+              Are you sure you want to logout?
+            </Typography>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                marginTop: '30px',
               }}
             >
-              cancel
-            </Button>
-            <Button
-              onClick={handleLogout}
-              type="submit"
-              sx={{
-                width: '40%',
-                border: '1px solid #475541',
-                '&:hover': {
-                  color: '#fff',
-                  backgroundColor: '#475541',
-                },
-              }}
-            >
-              yes
-            </Button>
+              <Button
+                onClick={handleClose}
+                sx={{
+                  width: '40%',
+                  border: '1px solid #932E2E',
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#932E2E',
+                  },
+                }}
+              >
+                cancel
+              </Button>
+              <Button
+                onClick={handleLogout}
+                type="submit"
+                sx={{
+                  width: '40%',
+                  border: '1px solid #475541',
+                  '&:hover': {
+                    color: '#fff',
+                    backgroundColor: '#475541',
+                  },
+                }}
+              >
+                yes
+              </Button>
             </div>
           </Box>
         </Modal>

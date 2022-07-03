@@ -20,6 +20,8 @@ import { login, reset } from '../../features/auth/authSlice'
 import { toast } from 'react-toastify'
 import Theme from '../../components/ui/Theme'
 
+import Wave from 'react-wavify'
+
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
@@ -70,95 +72,113 @@ export default function Login() {
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
   return (
-    <Grow in={true} {...{ timeout: 1000 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          minHeight: '90vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Paper
+    <>
+      <Grow in={true} {...{ timeout: 1000 }}>
+        <Box
           sx={{
-            width: 'auto',
-            height: 'auto',
+            display: 'flex',
+            minHeight: '78vh',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
-          elevation={5}
         >
-          <Box
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              backgroundColor: Theme.palette.common.black,
-              padding: '20px 50px',
+          <Paper
+            sx={{
+              width: 'auto',
+              height: 'auto',
             }}
+            elevation={5}
           >
-            <img src="img/sendero_logo.png" alt="" style={{ width: '240px' }} />
-          </Box>
-          <form onSubmit={handleSubmit}>
             <Box
-              sx={{
+              style={{
                 display: 'flex',
-                flexDirection: 'column',
-                '& > :not(style)': { m: 3 },
+                justifyContent: 'center',
+                backgroundColor: Theme.palette.common.black,
+                padding: '20px 50px',
               }}
             >
-              <FormControl>
-                <Stack spacing={1.5}>
-                  <TextField
-                    id="outlined-basic"
-                    required
-                    label="Email"
-                    variant="outlined"
-                    name="email"
-                    value={email}
-                    onChange={onChange}
-                  />
-                  <FormControl sx={{ m: 1 }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password" required>
-                      Password
-                    </InputLabel>
-                    <OutlinedInput
-                      id="outlined-adornment-password"
-                      type={showPassword ? 'text' : 'password'}
-                      label="Password"
-                      name="password"
-                      value={password}
-                      onChange={onChange}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleShowPassword}
-                            edge="end"
-                          >
-                            {showPassword ? (
-                              <Visibility />
-                            ) : (
-                              <VisibilityOff />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                    />
-                  </FormControl>
-                  <Button type="submit" variant="contained">
-                    Login
-                  </Button>
-                  <Link
-                    to="/register"
-                    style={{ textAlign: 'center', color: '#39533C' }}
-                  >
-                    Don&apos;t have an account? Register!
-                  </Link>
-                </Stack>
-              </FormControl>
+              <img
+                src="img/sendero_logo.png"
+                alt=""
+                style={{ width: '240px' }}
+              />
             </Box>
-          </form>
-          {isLoading && <LinearProgress />}
-        </Paper>
-      </Box>
-    </Grow>
+            <form onSubmit={handleSubmit}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  '& > :not(style)': { m: 3 },
+                }}
+              >
+                <FormControl>
+                  <Stack spacing={1.5}>
+                    <TextField
+                      id="outlined-basic"
+                      required
+                      label="Email"
+                      variant="outlined"
+                      name="email"
+                      value={email}
+                      onChange={onChange}
+                    />
+                    <FormControl sx={{ m: 1 }} variant="outlined">
+                      <InputLabel
+                        htmlFor="outlined-adornment-password"
+                        required
+                      >
+                        Password
+                      </InputLabel>
+                      <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={showPassword ? 'text' : 'password'}
+                        label="Password"
+                        name="password"
+                        value={password}
+                        onChange={onChange}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleShowPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                    <Button type="submit" variant="contained">
+                      Login
+                    </Button>
+                    <Link
+                      to="/register"
+                      style={{ textAlign: 'center', color: '#39533C' }}
+                    >
+                      Don&apos;t have an account? Register!
+                    </Link>
+                  </Stack>
+                </FormControl>
+              </Box>
+            </form>
+            {isLoading && <LinearProgress />}
+          </Paper>
+        </Box>
+      </Grow>
+      <Wave fill='#000'
+        paused={false}
+        options={{
+          height: 30,
+          amplitude: 50,
+          speed: 0.15,
+          points: 3
+        }}
+  />
+    </>
   )
 }
