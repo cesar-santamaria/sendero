@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   Box,
   Typography,
@@ -15,8 +16,10 @@ import {
   Alert,
   Stack,
   TextField,
+  InputAdornment,
+  Avatar
 } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 import { createJob } from '../../features/jobs/jobSlice'
 import { reset } from '../../features/auth/authSlice'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -27,6 +30,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 export default function JobForm() {
   const [open, setOpen] = useState(false)
+  const [logo, setLogo] = useState('')
   const [formData, setFormData] = useState({
     companyName: '',
     jobTitle: '',
@@ -116,6 +120,22 @@ export default function JobForm() {
     })
   }
 
+  useEffect(() => {
+    async function fetchLogo() {
+      if (companyName.length > 0) {
+        try {
+          const result = await axios.get(
+            `https://autocomplete.clearbit.com/v1/companies/suggest?query=${companyName}`
+          )
+          setLogo(result.data[0].logo)
+        } catch (err) {
+          setLogo('img/sendero_job_icon.png')
+        }
+      }
+    }
+    fetchLogo()
+  }, [companyName])
+
   return (
     <Container
       maxWidth="md"
@@ -135,132 +155,161 @@ export default function JobForm() {
                 Add a job
               </Typography>
               <form onSubmit={handleSubmit}>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>company</InputLabel>
-                  <Input
-                    name="companyName"
-                    label="company"
-                    value={companyName}
-                    onChange={onChange}
-                    required
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>job title</InputLabel>
-                  <Input
-                    name="jobTitle"
-                    label="job title"
-                    value={jobTitle}
-                    onChange={onChange}
-                    required
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>salary</InputLabel>
-                  <Input
-                    name="salary"
-                    label="salary"
-                    value={salary}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>location</InputLabel>
-                  <Input
-                    name="location"
-                    label="location"
-                    value={location}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <Stack spacing={2}>
-                      <DesktopDatePicker
-                        label="calendar"
-                        inputFormat="MM/dd/yyyy"
-                        value={value}
-                        onChange={handleChange}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </Stack>
-                  </LocalizationProvider>
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>job link</InputLabel>
-                  <Input
-                    name="jobLink"
-                    label="jobLink"
-                    value={jobLink}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>resume</InputLabel>
-                  <Input
-                    name="resume"
-                    label="resume"
-                    value={resume}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>contact name</InputLabel>
-                  <Input
-                    name="contactName"
-                    label="contactName"
-                    value={contactName}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>contact email</InputLabel>
-                  <Input
-                    name="contactEmail"
-                    label="contactEmail"
-                    value={contactEmail}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>details</InputLabel>
-                  <Input
-                    name="details"
-                    label="details"
-                    value={details}
-                    onChange={onChange}
-                  />
-                </FormControl>
-                <FormControl
+              <div style={{ flexDirection: 'row' }}>
+              <Avatar src={logo} />
+              <TextField
+                id="standard-basic"
+                name="companyName"
+                label="company"
+                variant="standard"
+                value={companyName}
+                onChange={onChange}
+                sx={{ mt: 1, mr: 2 }}
+              />
+              <TextField
+                id="standard-basic"
+                name="jobTitle"
+                label="job title"
+                variant="standard"
+                value={jobTitle}
+                onChange={onChange}
+                sx={{ mt: 1, mr: 2 }}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  marginTop: '15px',
+                }}
+              >
+                <TextField
+                  sx={{ mt: 1, mr: 2, width: '100px' }}
+                  id="standard-adornment-amount"
+                  name="salary"
+                  label="salary"
                   variant="standard"
-                  fullWidth
-                  style={{ marginTop: '20px' }}
+                  value={salary}
+                  onChange={onChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  id="standard-basic"
+                  name="location"
+                  label="location"
+                  variant="standard"
+                  value={location}
+                  onChange={onChange}
+                  sx={{ mt: 1, mr: 2, width: '100px' }}
+                />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack spacing={1}>
+                    <DesktopDatePicker
+                      label='calendar'
+                      name='calendar'
+                      inputFormat='MM/dd/yy'
+                      value={value}
+                      onChange={handleChange}
+                      renderInput={(params)=> <TextField {...params} style={{width:'135px'}}/>}
+                    />
+                  </Stack>
+                </LocalizationProvider>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  margin: '15px 0',
+                }}
+              >
+                <TextField
+                  id="standard-basic"
+                  name="jobLink"
+                  label="job link"
+                  variant="standard"
+                  value={jobLink}
+                  onChange={onChange}
+                  sx={{ mt: 1, mr: 2 }}
+                />
+                <TextField
+                  id="standard-basic"
+                  name="resume"
+                  label="resume link"
+                  variant="standard"
+                  value={resume}
+                  onChange={onChange}
+                  sx={{ mt: 1, mr: 2 }}
+                />
+              </div>
+              <TextField
+                id="standard-basic"
+                name="contactName"
+                label="contact name"
+                variant="standard"
+                value={contactName}
+                onChange={onChange}
+                sx={{ mt: 1, mr: 2 }}
+              />
+              <TextField
+                id="standard-basic"
+                name="contactEmail"
+                label="contact email"
+                variant="standard"
+                value={contactEmail}
+                onChange={onChange}
+                sx={{ mt: 1, mr: 2 }}
+              />
+              <TextField
+                id="standard-basic"
+                name="details"
+                label="details"
+                variant="standard"
+                multiline
+                fullWidth
+                maxRows={4}
+                value={details}
+                onChange={onChange}
+                sx={{ mt: 1, mr: 2 }}
+              />
+              <FormControl
+                variant="standard"
+                fullWidth
+                style={{ marginTop: '20px' }}
+              >
+                <InputLabel>status</InputLabel>
+                <Select
+                  value={status}
+                  name="status"
+                  label="Status"
+                  defaultValue="status"
+                  onChange={onChange}
+                  required
                 >
-                  <InputLabel>Status</InputLabel>
-                  <Select
-                    value={status}
-                    name="status"
-                    label="Status"
-                    defaultValue="status"
-                    onChange={onChange}
-                    required
-                  >
-                    <MenuItem value={'interested'}>Interested</MenuItem>
-                    <MenuItem value={'applied'}>Applied</MenuItem>
-                    <MenuItem value={'interview'}>Interview</MenuItem>
-                    <MenuItem value={'offer'}>Offer</MenuItem>
-                    <MenuItem value={'rejected'}>Rejected</MenuItem>
-                  </Select>
-                </FormControl>
+                  <MenuItem value={'interested'}>Interested</MenuItem>
+                  <MenuItem value={'applied'}>Applied</MenuItem>
+                  <MenuItem value={'interview'}>Interview</MenuItem>
+                  <MenuItem value={'offer'}>Offer</MenuItem>
+                  <MenuItem value={'rejected'}>Rejected</MenuItem>
+                </Select>
+              </FormControl>
+              </div>
                 <Button
                   variant="contained"
-                  color="primary"
                   style={{ marginTop: '25px', color: 'white' }}
                   type="submit"
                   fullWidth
                   onClick={handleOpenSnackBar}
+                  sx={{
+                    border: '1px solid #475541',
+                    '&:hover': {
+                      color: '#fff',
+                      backgroundColor: '#475541',
+                    },
+                  }}
                 >
-                  Save
+                  add job
                 </Button>
               </form>
             </Box>
