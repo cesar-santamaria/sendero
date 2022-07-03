@@ -1,16 +1,25 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded'
-import { IconButton, Button, FormControl, MenuItem } from '@mui/material'
-import Input from '@mui/material/Input'
-import InputLabel from '@mui/material/InputLabel'
-import InputAdornment from '@mui/material/InputAdornment'
 import { useDispatch } from 'react-redux'
+import {
+  Box,
+  TextField,
+  Typography,
+  Modal,
+  IconButton,
+  Button,
+  FormControl,
+  MenuItem,
+  Input,
+  InputLabel,
+  InputAdornment,
+  Select,
+  Stack
+} from '@mui/material'
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded'
 import { deleteJob, editJob } from '../../features/jobs/jobSlice'
-import Select from '@mui/material/Select'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const style = {
   position: 'absolute',
@@ -37,7 +46,14 @@ export default function JobsModal(props) {
     contactName: props.contactName || '',
     contactEmail: props.contactEmail || '',
     details: props.details || '',
+    status: props.status || '',
   })
+  const [value, setValue] = useState(new Date(Date.now()));
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const dispatch = useDispatch()
@@ -93,9 +109,8 @@ export default function JobsModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            Edit
-          </Typography>
+          <Typography variant="h5">Edit</Typography>
+          <hr />
           <form
             style={{ display: 'flex', justifyContent: 'space-evenly' }}
             onSubmit={handleSubmit}
@@ -122,7 +137,7 @@ export default function JobsModal(props) {
               <div
                 style={{
                   display: 'flex',
-                  marginTop: '5px',
+                  marginTop: '15px',
                 }}
               >
                 <TextField
@@ -148,21 +163,18 @@ export default function JobsModal(props) {
                   onChange={onChange}
                   sx={{ mt: 1, mr: 2, width: '100px' }}
                 />
-                <TextField
-                  id="standard-basic"
-                  name="calendar"
-                  label="date"
-                  variant="standard"
-                  onChange={onChange}
-                  value={
-                    calendar
-                      ? new Date(calendar).toLocaleString('en-US', {
-                          dateStyle: 'medium',
-                        })
-                      : ''
-                  }
-                  sx={{ mt: 1, mr: 2, width: '100px' }}
-                />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack spacing={1}>
+                    <DesktopDatePicker
+                      label='calendar'
+                      name='calendar'
+                      inputFormat='MM/dd/yy'
+                      value={value}
+                      onChange={handleChange}
+                      renderInput={(params)=> <TextField {...params} style={{width:'135px'}}/>}
+                    />
+                  </Stack>
+                </LocalizationProvider>
               </div>
               <div
                 style={{
@@ -225,7 +237,7 @@ export default function JobsModal(props) {
                 fullWidth
                 style={{ marginTop: '20px' }}
               >
-                <InputLabel>Status</InputLabel>
+                <InputLabel>status</InputLabel>
                 <Select
                   value={status}
                   name="status"

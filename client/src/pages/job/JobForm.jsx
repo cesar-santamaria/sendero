@@ -13,11 +13,17 @@ import {
   Select,
   Snackbar,
   Alert,
+  Stack,
+  TextField,
 } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { createJob } from '../../features/jobs/jobSlice'
-import { useEffect } from 'react'
 import { reset } from '../../features/auth/authSlice'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
+
 
 export default function JobForm() {
   const [open, setOpen] = useState(false)
@@ -34,6 +40,11 @@ export default function JobForm() {
     details: '',
     status: '',
   })
+  const [value, setValue] = useState(new Date(Date.now()));
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
 
   const { jobs, isLoading, isError, isSuccess, message } = useSelector(
     (state) => {
@@ -80,7 +91,7 @@ export default function JobForm() {
       jobTitle,
       salary,
       location,
-      calendar,
+      calendar: value,
       jobLink,
       resume,
       contactName,
@@ -88,15 +99,14 @@ export default function JobForm() {
       details,
       status,
     }
-    
-    dispatch(createJob(jobData))
     setOpen(true)
+    dispatch(createJob(jobData))
     setFormData({
       companyName: '',
       jobTitle: '',
       salary: '',
       location: '',
-      calendar: '',
+      calendar : '',
       jobLink: '',
       resume: '',
       contactName: '',
@@ -105,7 +115,6 @@ export default function JobForm() {
       status: '',
     })
   }
-
 
   return (
     <Container
@@ -165,13 +174,17 @@ export default function JobForm() {
                   />
                 </FormControl>
                 <FormControl style={{ marginTop: '20px' }}>
-                  <InputLabel>date</InputLabel>
-                  <Input
-                    name="calendar"
-                    label="calendar"
-                    value={calendar}
-                    onChange={onChange}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <Stack spacing={2}>
+                      <DesktopDatePicker
+                        label="calendar"
+                        inputFormat="MM/dd/yyyy"
+                        value={value}
+                        onChange={handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Stack>
+                  </LocalizationProvider>
                 </FormControl>
                 <FormControl style={{ marginTop: '20px' }}>
                   <InputLabel>job link</InputLabel>
@@ -252,10 +265,7 @@ export default function JobForm() {
               </form>
             </Box>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert
-                onClose={handleClose}
-                severity="success"
-              >
+              <Alert onClose={handleClose} severity="success">
                 Job added succesfully
               </Alert>
             </Snackbar>

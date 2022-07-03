@@ -36,6 +36,7 @@ export default function JobItem(props) {
     contactName,
     contactEmail,
     resume,
+    status
   } = props
 
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function JobItem(props) {
             contactName={contactName}
             contactEmail={contactEmail}
             resume={resume}
+            status={status}
           />
         }
       />
