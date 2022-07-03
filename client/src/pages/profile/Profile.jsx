@@ -1,4 +1,4 @@
-import {useState,useEffect}from 'react'
+import {useEffect}from 'react'
 import {
   Box,
   Typography,
@@ -8,9 +8,6 @@ import {
   Avatar,
   FormControl,
   TextField,
-  InputLabel,
-  Input,
-  Button,
 } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { jobsSelector } from '../../features/jobs/jobSlice'
@@ -26,7 +23,7 @@ export default function Profile() {
   
   useEffect(()=> {
     dispatch(getJob())
-  },[getJob])
+  },[dispatch])
   
   return (
     <Container

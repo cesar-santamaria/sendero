@@ -8,7 +8,6 @@ import {
   Paper,
   FormControl,
   InputLabel,
-  Input,
   Button,
   MenuItem,
   Select,
@@ -50,7 +49,7 @@ export default function JobForm() {
     setValue(newValue);
   };
 
-  const { jobs, isLoading, isError, isSuccess, message } = useSelector(
+  const { jobs } = useSelector(
     (state) => {
       return state.jobs
     }
@@ -61,7 +60,6 @@ export default function JobForm() {
     jobTitle,
     salary,
     location,
-    calendar,
     jobLink,
     resume,
     contactName,

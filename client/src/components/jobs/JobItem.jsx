@@ -12,7 +12,7 @@ export default function JobItem(props) {
   const [logo, setLogo] = useState('')
   const [open, setOpen] = useState(false)
 
-  const { jobs, isLoading, isError, isSuccess ,message } = useSelector((state) => {
+  const { isLoading} = useSelector((state) => {
     return state.jobs
   })
 

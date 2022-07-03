@@ -9,7 +9,7 @@ import DashboardColumnHeading from './DashboardColumnHeading'
 export default function DashboardColumn() {
   const dispatch = useDispatch()
 
-  const { jobs, isLoading, isError, message } = useSelector((state) => {
+  const { jobs } = useSelector((state) => {
     return state.jobs
   })
 

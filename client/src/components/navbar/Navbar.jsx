@@ -17,7 +17,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import EventIcon from '@mui/icons-material/Event'
 import { navbarItems } from './consts/navbarItems'
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { logout, reset } from '../../features/auth/authSlice'
 import Theme from '../ui/Theme'
 import { Grow } from '@mui/material'
@@ -39,7 +39,6 @@ const style = {
 
 export default function Navbar(props) {
   const [open, setOpen] = React.useState(false)
-  const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 

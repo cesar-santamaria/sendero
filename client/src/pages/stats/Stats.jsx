@@ -2,19 +2,7 @@ import {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   Box,
-  TextField,
   Typography,
-  Modal,
-  IconButton,
-  Button,
-  FormControl,
-  MenuItem,
-  Input,
-  InputLabel,
-  InputAdornment,
-  Select,
-  Stack,
-  Paper
 } from '@mui/material'
 
 import {
@@ -37,7 +25,7 @@ import { getJob } from '../../features/jobs/jobSlice'
 const jobPalette = ['#82919E', '#9CA78F', '#90BE6D', '#43AA8B', '#F94144'];
 
 export default function Stats() {
-  const { jobs, isLoading, isError, message } = useSelector((state) => {
+  const { jobs } = useSelector((state) => {
     return state.jobs
   })
   const dispatch = useDispatch()
@@ -59,7 +47,7 @@ export default function Stats() {
 
   useEffect(()=> {
     dispatch(getJob())
-  },[getJob])
+  },[dispatch])
 
 
   return (
