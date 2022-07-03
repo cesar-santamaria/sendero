@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Box,
   Typography,
@@ -10,13 +10,17 @@ import {
   Input,
   Button,
   MenuItem,
+  Select,
+  Snackbar,
+  Alert,
 } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { createJob } from '../../features/jobs/jobSlice'
-import Select from '@mui/material/Select'
-
+import { useEffect } from 'react'
+import { reset } from '../../features/auth/authSlice'
 
 export default function JobForm() {
+  const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({
     companyName: '',
     jobTitle: '',
@@ -31,6 +35,12 @@ export default function JobForm() {
     status: '',
   })
 
+  const { jobs, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => {
+      return state.jobs
+    }
+  )
+
   const {
     companyName,
     jobTitle,
@@ -44,6 +54,7 @@ export default function JobForm() {
     details,
     status,
   } = formData
+
   const dispatch = useDispatch()
 
   const onChange = (e) => {
@@ -52,6 +63,16 @@ export default function JobForm() {
       [e.target.name]: e.target.value,
     }))
   }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleOpenSnackBar = () => {
+    console.log(jobs)
+    dispatch(reset())
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const jobData = {
@@ -67,7 +88,9 @@ export default function JobForm() {
       details,
       status,
     }
+    
     dispatch(createJob(jobData))
+    setOpen(true)
     setFormData({
       companyName: '',
       jobTitle: '',
@@ -82,6 +105,8 @@ export default function JobForm() {
       status: '',
     })
   }
+
+
   return (
     <Container
       maxWidth="md"
@@ -220,11 +245,20 @@ export default function JobForm() {
                   style={{ marginTop: '25px', color: 'white' }}
                   type="submit"
                   fullWidth
+                  onClick={handleOpenSnackBar}
                 >
                   Save
                 </Button>
               </form>
             </Box>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="success"
+              >
+                Job added succesfully
+              </Alert>
+            </Snackbar>
           </Grid>
         </Grid>
       </Paper>

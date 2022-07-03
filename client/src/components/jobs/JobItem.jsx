@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
-import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
 
 
@@ -13,7 +12,7 @@ export default function JobItem(props) {
   const [logo, setLogo] = useState('')
   const [open, setOpen] = useState(false)
 
-  const { jobs, isLoading, isError, message } = useSelector((state) => {
+  const { jobs, isLoading, isError, isSuccess ,message } = useSelector((state) => {
     return state.jobs
   })
 
