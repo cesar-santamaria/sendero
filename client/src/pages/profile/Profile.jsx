@@ -20,9 +20,9 @@ export default function Profile() {
   const { user } = useSelector((state) => state.auth)
   const { jobs } = useSelector(jobsSelector);
   const dispatch = useDispatch()
-  
-  console.log(jobs.length)
-  console.log(user)
+
+  const timestamp = user._id.toString().substring(0,8)
+  const timestampDate = new Date( parseInt( timestamp, 16 ) * 1000 )
   
   useEffect(()=> {
     dispatch(getJob())
@@ -30,13 +30,14 @@ export default function Profile() {
   
   return (
     <Container
-      maxWidth="md"
+      // maxWidth="md"
       sx={{
         display: 'flex',
         height: '100vh',
         width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft:'210px'
       }}
     >
       <Paper style={{ padding: '50px' }}>
@@ -62,13 +63,13 @@ export default function Profile() {
                 {' '}
                 Active Since{' '}
               </Typography>
-              <Typography variant="body1">  </Typography>
+              <Typography variant="body1"> {timestampDate.toLocaleString('en-US',{ dateStyle: 'medium' })}  </Typography>
               <Typography
                 variant="h6"
                 style={{ marginTop: '15px', fontWeight: '400' }}
               >
                 {' '}
-                Total Number of Jobs{' '}
+                Number of Jobs{' '}
               </Typography>
               <Typography variant="body1"> {jobs.length} </Typography>
             </Box>
@@ -99,22 +100,6 @@ export default function Profile() {
                   style={{ marginBottom: '10px' }}
                 />
               </FormControl>
-              <Typography variant="h4">Password</Typography>
-              <FormControl>
-                <InputLabel>Password</InputLabel>
-                <Input label="Password" />
-              </FormControl>
-              <FormControl style={{ marginTop: '10px' }}>
-                <InputLabel>Password Confirmation</InputLabel>
-                <Input label="Password Confirmation" />
-              </FormControl>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ marginTop: '25px', color: 'white' }}
-              >
-                Confirm Changes
-              </Button>
             </Box>
           </Grid>
         </Grid>
