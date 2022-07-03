@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
+    "@devexpress/dx-react-chart-material-ui": "^3.0.3",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.3",
