@@ -20,9 +20,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../../features/auth/authSlice'
 import Theme from '../ui/Theme'
 import { Grow } from '@mui/material'
-import { width } from '@mui/system'
 
-const drawerWidth = 210
+const drawerWidth = 200
 const style = {
   position: 'absolute',
   top: '50%',
@@ -55,6 +54,11 @@ export default function Navbar(props) {
   const handleClose = () => {
     setOpen(false)
   }
+
+  /* 
+  GOOGLE CALENDAR
+  onClick={() => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); }}
+  */
 
   return (
     <Drawer
@@ -109,7 +113,6 @@ export default function Navbar(props) {
           </ListItemIcon>
         </ListItemButton>
         <Modal
-          hideBackdrop
           open={open}
           onClose={handleClose}
           aria-labelledby="child-modal-title"

@@ -30,17 +30,16 @@ export default function Profile() {
   
   return (
     <Container
-      // maxWidth="md"
+      maxWidth="md"
       sx={{
         display: 'flex',
         height: '100vh',
         width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft:'210px'
       }}
     >
-      <Paper style={{ padding: '50px' }}>
+      <Paper style={{ padding: '10px' }}>
         <Grid container>
           <Grid item xs={12} lg>
             <Box display="flex" flexDirection="column" p={2}>
@@ -75,11 +74,11 @@ export default function Profile() {
             </Box>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Box display="flex" flexDirection="column" flexGrow={1} p={2}>
-              <Typography variant="h4" style={{ marginTop: '-5px' }}>
+            <Box display="flex" flexDirection="column" flexGrow={1} p={1}>
+              <Typography variant="h4" style={{ marginTop: '5px' }}>
                 Personal Information
               </Typography>
-              <FormControl>
+              <FormControl style={{ marginTop: '45px'}}>
                 <TextField
                   label="First Name"
                   value={user.firstName}
