@@ -18,7 +18,7 @@ export default function DashboardColumnHeading(props) {
       <Grid item xs={12} lg>
         <Item>
           <img
-            src="img/tabs/wishlist.png"
+            src={props.tab}
             alt="color icon used to style columns"
             style={{ width: '12px', marginRight: '5px' }}
           />

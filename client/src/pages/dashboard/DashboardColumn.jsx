@@ -47,11 +47,11 @@ export default function DashboardColumn() {
     >
       <Box style={{ marginLeft: '210px' }} sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-            <DashboardColumnHeading index={0} job={jobItems.filter((job)=>job.props.status === "interested")} title="INTERESTED"/>
-            <DashboardColumnHeading index={1} job={jobItems.filter((job)=>job.props.status === "applied")} title="APPLIED"/>
-            <DashboardColumnHeading index={2} job={jobItems.filter((job)=>job.props.status === "interview")} title="INTERVIEW"/>
-            <DashboardColumnHeading index={3} job={jobItems.filter((job)=>job.props.status === "offer")} title="OFFER"/>
-            <DashboardColumnHeading index={4} job={jobItems.filter((job)=>job.props.status === "rejected")} title="REJECTED"/>
+            <DashboardColumnHeading index={0} job={jobItems.filter((job)=>job.props.status === "interested")} tab="./img/tabs/interested.png" title="INTERESTED"/>
+            <DashboardColumnHeading index={1} job={jobItems.filter((job)=>job.props.status === "applied")} tab="./img/tabs/applied.png" title="APPLIED"/>
+            <DashboardColumnHeading index={2} job={jobItems.filter((job)=>job.props.status === "interview")} tab="./img/tabs/interview.png" title="INTERVIEW"/>
+            <DashboardColumnHeading index={3} job={jobItems.filter((job)=>job.props.status === "offer")} tab="./img/tabs/offer.png" title="OFFER"/>
+            <DashboardColumnHeading index={4} job={jobItems.filter((job)=>job.props.status === "rejected")} tab="./img/tabs/rejected.png" title="REJECTED"/>
         </Grid>
       </Box>
     </Container>
