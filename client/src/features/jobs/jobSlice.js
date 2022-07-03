@@ -149,6 +149,6 @@ export const jobSlice = createSlice({
       })
   },
 })
-
+export const jobsSelector = (state) => state.jobs;
 export const { reset } = jobSlice.actions
 export default jobSlice.reducer

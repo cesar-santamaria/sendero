@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState,useEffect}from 'react'
 import {
   Box,
   Typography,
@@ -12,10 +12,21 @@ import {
   Input,
   Button,
 } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { jobsSelector } from '../../features/jobs/jobSlice'
+import { getJob } from '../../features/jobs/jobSlice'
 
 export default function Profile() {
   const { user } = useSelector((state) => state.auth)
+  const { jobs } = useSelector(jobsSelector);
+  const dispatch = useDispatch()
+  
+  console.log(jobs.length)
+  console.log(user)
+  
+  useEffect(()=> {
+    dispatch(getJob())
+  },[getJob])
   
   return (
     <Container
@@ -33,10 +44,11 @@ export default function Profile() {
           <Grid item xs={12} lg>
             <Box display="flex" flexDirection="column" p={2}>
               <Avatar
-                src={`img/profile/c_profile.jpeg`}
                 alt="user initials"
-                sx={{ width: 100, height: 100 }}
-              />
+                sx={{ bgcolor: '#475541', width: 80, height: 80 }}
+              >
+                <Typography variant='h4'>{`${user.firstName.slice(0,1)} ${user.lastName.slice(0,1)}`}</Typography>
+              </Avatar>
               <Typography
                 variant="h5"
                 style={{ marginTop: '5px', fontWeight: '400' }}
@@ -50,7 +62,7 @@ export default function Profile() {
                 {' '}
                 Active Since{' '}
               </Typography>
-              <Typography variant="body1"> 15/06/2022 </Typography>
+              <Typography variant="body1">  </Typography>
               <Typography
                 variant="h6"
                 style={{ marginTop: '15px', fontWeight: '400' }}
@@ -58,7 +70,7 @@ export default function Profile() {
                 {' '}
                 Total Number of Jobs{' '}
               </Typography>
-              <Typography variant="body1"> 10 </Typography>
+              <Typography variant="body1"> {jobs.length} </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={8}>
