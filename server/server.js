@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/users')
 const jobRoutes = require('./routes/jobs')
+const path = require('path')
 require('dotenv').config();
 
 const app = express();
@@ -27,6 +28,15 @@ app.use('/api/users', userRoutes);
 
 //Job Routes
 app.use('/api/jobs', jobRoutes);
+
+//server frontend
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname,'../client/build')))
+
+  app.get('*',(req,res) => res.sendFile(path.resolve(__dirname, '../','client','build','index.html')))
+} else {
+  app.get('/', (req,res) => res.send("Please node_env to production"))
+}
 
 // PORT
 app.listen(PORT, () => {
