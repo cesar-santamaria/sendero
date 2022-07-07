@@ -1,46 +1,93 @@
-import React from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import {
-  Drawer,
+  styled,
   List,
   Divider,
+  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Box,
-  CardMedia,
-  Typography,
-  Modal,
-  Button,
 } from '@mui/material'
-import LogoutIcon from '@mui/icons-material/Logout'
+import MuiDrawer from '@mui/material/Drawer'
+
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import AddBoxIcon from '@mui/icons-material/AddBox'
 import EventIcon from '@mui/icons-material/Event'
-import { navbarItems } from './consts/navbarItems'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import LogoutIcon from '@mui/icons-material/Logout'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+
 import { logout, reset } from '../../features/auth/authSlice'
+
 import Theme from '../ui/Theme'
-import { Grow } from '@mui/material'
 
-const drawerWidth = 200
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  borderRadius: '3px',
-  boxShadow: 15,
-  pt: 2,
-  px: 4,
-  pb: 3,
-}
+const drawerWidth = 170
 
-export default function Navbar(props) {
-  const [open, setOpen] = React.useState(false)
-  const navigate = useNavigate()
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+})
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+})
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}))
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}))
+
+export default function MiniDrawer() {
+  const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+
+  const handleDrawerOpen = () => {
+    setOpen(true)
+  }
+
+  const handleDrawerClose = () => {
+    setOpen(false)
+  }
 
   const handleLogout = () => {
     dispatch(logout())
@@ -48,135 +95,206 @@ export default function Navbar(props) {
     navigate('/login')
   }
 
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  /* 
-  GOOGLE CALENDAR
-  onClick={() => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); }}
-  */
-
   return (
     <Drawer
+      variant="permanent"
       sx={{
-        width: drawerWidth,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: drawerWidth,
           boxSizing: 'border-box',
           backgroundColor: Theme.palette.common.black,
-          color: '#fff',
         },
       }}
+      open={open}
       color="primary"
-      variant="permanent"
-      anchor="left"
     >
-      <Box
+      <img
+        height="auto"
+        src="img/sendero_icon.svg"
+        alt="sendero logo"
         style={{
           display: 'flex',
           justifyContent: 'center',
-          padding: '32px 80px',
+          marginTop: '15px',
+          height: '50px',
+          width: '100%',
         }}
+      />
+      <DrawerHeader
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}
       >
-        <Grow in={true} {...{ timeout: 1500 }}>
-          <CardMedia
-            component="img"
-            width="32px"
-            image="img/sendero_icon.svg"
-            alt="sendero logo"
-          />
-        </Grow>
-      </Box>
+        {open === true ? (
+          <IconButton onClick={handleDrawerClose}>
+            {' '}
+            <ChevronLeftIcon sx={{ color: '#fff' }} />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handleDrawerOpen}>
+            <ChevronRightIcon sx={{ color: '#fff' }} />
+          </IconButton>
+        )}
+      </DrawerHeader>
       <Divider style={{ backgroundColor: '#F7FBFF' }} />
+      <Divider />
       <List>
-        {navbarItems.map((item, index) => (
-          <ListItem key={item.id} onClick={() => navigate(item.path)}>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: '#fff', padding: '0' }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <ListItemButton>
-          <ListItemIcon
-            sx={{ color: '#fff', marginLeft: '17px', marginTop: '20px' }}
-            onClick={() => {
-              window.open(
-                'https://calendar.google.com/calendar/u/0/r',
-                '_blank'
-              )
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2,
             }}
+            onClick={() => navigate('/')}
           >
-            <EventIcon />
-            <Typography sx={{ marginLeft: '28px' }}>Calendar</Typography>
-          </ListItemIcon>
-        </ListItemButton>
-        <ListItemButton onClick={handleOpen}>
-          <ListItemIcon
-            sx={{ color: '#fff', marginLeft: '20px', marginTop: '80px' }}
-          >
-            <LogoutIcon />
-            <Typography sx={{ marginLeft: '28px' }}>Logout</Typography>
-          </ListItemIcon>
-        </ListItemButton>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <Box sx={{ ...style, width: 300 }}>
-            <Typography
-              sx={{ mt: 3 }}
-              variant="h5"
-              id="child-modal-description"
-            >
-              Are you sure you want to logout?
-            </Typography>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-evenly',
-                marginTop: '30px',
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                color: '#fff',
               }}
             >
-              <Button
-                onClick={handleClose}
-                sx={{
-                  width: '40%',
-                  border: '1px solid #932E2E',
-                  '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#932E2E',
-                  },
-                }}
-              >
-                cancel
-              </Button>
-              <Button
-                onClick={handleLogout}
-                type="submit"
-                sx={{
-                  width: '40%',
-                  border: '1px solid #475541',
-                  '&:hover': {
-                    color: '#fff',
-                    backgroundColor: '#475541',
-                  },
-                }}
-              >
-                yes
-              </Button>
-            </div>
-          </Box>
-        </Modal>
+              <DashboardCustomizeRoundedIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'Dashboard'}
+              sx={{ opacity: open ? 1 : 0, color: '#fff' }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2,
+            }}
+            onClick={() => navigate('/profile')}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                color: '#fff',
+              }}
+            >
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'Profile'}
+              sx={{ opacity: open ? 1 : 0, color: '#fff' }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2,
+            }}
+            onClick={() => navigate('/stats')}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                color: '#fff',
+              }}
+            >
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'Stats'}
+              sx={{ opacity: open ? 1 : 0, color: '#fff' }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2,
+            }}
+            onClick={() => navigate('/job-form')}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                color: '#fff',
+              }}
+            >
+              <AddBoxIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'Add job'}
+              sx={{ opacity: open ? 1 : 0, color: '#fff' }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2,
+            }}
+            onClick={() => navigate('/job-form')}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                color: '#fff',
+              }}
+              onClick={() => {
+                window.open(
+                  'https://calendar.google.com/calendar/u/0/r',
+                  '_blank'
+                )
+              }}
+            >
+              <EventIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'Calendar'}
+              sx={{ opacity: open ? 1 : 0, color: '#fff' }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2,
+              marginTop: '200px'
+            }}
+            onClick={() => navigate('/job-form')}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+                color: '#fff',
+              }}
+              onClick={handleLogout}
+            >
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={'Logout'}
+              sx={{ opacity: open ? 1 : 0, color: '#fff' }}
+            />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Drawer>
   )
