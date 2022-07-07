@@ -1,7 +1,7 @@
 # Sendero Job Tracker App
 Sendero is a full stack application that keeps track of every detail while on your job search. Keep your job search organized and all in one place!
 
-**Link to project:** https://sendero-app.herokuapp.com/
+**Link to project:** https://sendero-job.herokuapp.com/
 
 ![Login screen](./docs/login.gif)
 ![Dashboard](./docs/dashboard.gif)
