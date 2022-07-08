@@ -45,7 +45,7 @@ export default function DashboardColumn() {
       style={{ margin: '0px' }}
       maxWidth={false}
     >
-      <Box style={{ marginLeft: '210px' }} sx={{ flexGrow: 1 }}>
+      <Box style={{ marginLeft: '65px' }} sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
             <DashboardColumnHeading index={0} job={jobItems.filter((job)=>job.props.status === "interested")} tab="./img/tabs/interested.png" title="INTERESTED"/>
             <DashboardColumnHeading index={1} job={jobItems.filter((job)=>job.props.status === "applied")} tab="./img/tabs/applied.png" title="APPLIED"/>

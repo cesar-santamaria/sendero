@@ -140,14 +140,14 @@ export default function JobForm() {
       sx={{
         display: 'flex',
         height: '100vh',
-        width: '50%',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <Paper style={{ padding: '30px' }}>
+      <Paper style={{ padding: '30px', marginLeft:'150px' }}>
         <Grid container>
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12} lg>
             <Box display="flex" flexDirection="column" flexGrow={1} p={2}>
               <Typography variant="h4" style={{ marginBottom: '20px' }}>
                 Add a job

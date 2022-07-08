@@ -54,9 +54,9 @@ export default function Stats() {
         width: '100vw',
       }}
     >
-      <div style={{ width: '50%', marginLeft: '200px' }}>
+      <div style={{ width: '50%', marginLeft: '10px' }}>
         <Box
-          mb={2}
+          mb={1}
           display="flex"
           justifyContent="center"
           alignContent="center"
