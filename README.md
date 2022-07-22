@@ -11,7 +11,7 @@ Sendero is a full stack application that keeps track of every detail while on yo
 
 **Tech used:** React, Material UI ,Redux Toolkit, Express, MongoDB, NodeJS
 
-The beginning of this project started with a logo design that I created using Adobe Illustrator and Photoshop. Im a visual person so I like to work around a certain concept before jumping into the code. Once I had the planning and wireframes completed I began on the backend of the application using Insomnia to test my routes to a MongoDB database. After the backend setup I started working on the frontend where I had to learn Material UI with every component I built. I also wanted to challange my ability to learn something new which is why I decided on utilizing Redux Toolkit as my state managment.
+The beginning of this project started with a logo design that I created using Adobe Illustrator and Photoshop. I like to work around a certain design before jumping into the code. Once I had the planning and wireframes completed I began on the backend of the application using Insomnia to test my routes to a MongoDB database. After the backend setup I started working on the frontend where I had to learn Material UI with every component I built. I also wanted to challange my ability to learn something new which is why I decided on utilizing Redux Toolkit as my state managment.
 
 ## Optimizations
 
