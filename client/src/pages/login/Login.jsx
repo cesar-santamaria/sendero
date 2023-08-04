@@ -20,7 +20,6 @@ import { login, reset } from '../../features/auth/authSlice'
 import { toast } from 'react-toastify'
 import Theme from '../../components/ui/Theme'
 
-import Wave from 'react-wavify'
 
 export default function Login() {
   const [formData, setFormData] = useState({
