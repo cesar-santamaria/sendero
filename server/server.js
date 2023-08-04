@@ -22,7 +22,7 @@ mongoose.connection.on("connected", () => {
 // vercel
 app.use(
   cors({
-    origin: "https://sendero-cesar-santamaria.vercel.app",
+    origin: "https://sendero-client.vercel.app",
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
