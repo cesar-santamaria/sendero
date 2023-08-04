@@ -11,7 +11,7 @@ const initialState = {
 
 // create new job
 export const createJob = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/jobs/create",
+  "jobs/create",
   async (jobData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -29,27 +29,22 @@ export const createJob = createAsyncThunk(
 );
 
 // get user jobs
-export const getJob = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/jobs/getAll",
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await jobService.getJobs(token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getJob = createAsyncThunk("jobs/getAll", async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token;
+    return await jobService.getJobs(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 // delete job
 export const deleteJob = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/jobs/delete",
+  "jobs/delete",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -68,7 +63,7 @@ export const deleteJob = createAsyncThunk(
 
 // edit job
 export const editJob = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/jobs/edit",
+  "jobs/edit",
   async ({ id, jobData }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;

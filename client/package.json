@@ -1,7 +1,7 @@
 {
   "name": "sendero",
   "version": "0.1.0",
-  "proxy": "http://localhost:8000/",
+  "proxy": "https://sendero-api.onrender.com",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",

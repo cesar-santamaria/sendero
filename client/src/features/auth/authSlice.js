@@ -14,7 +14,7 @@ const initialState = {
 
 // register user
 export const register = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/auth/register",
+  "/auth/register",
   async (user, thunkAPI) => {
     try {
       return await authService.register(user);
@@ -31,30 +31,22 @@ export const register = createAsyncThunk(
 );
 
 // login user
-export const login = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/auth/login",
-  async (user, thunkAPI) => {
-    try {
-      return await authService.login(user);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const login = createAsyncThunk("/auth/login", async (user, thunkAPI) => {
+  try {
+    return await authService.login(user);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 // logout user
-export const logout = createAsyncThunk(
-  "https://main--calm-eclair-804e4b.netlify.app/api/auth/logout",
-  async () => {
-    await authService.logout();
-  }
-);
+export const logout = createAsyncThunk("/auth/logout", async () => {
+  await authService.logout();
+});
 
 export const authSlice = createSlice({
   name: "auth",
