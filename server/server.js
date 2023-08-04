@@ -19,7 +19,7 @@ mongoose.connection.on("connected", () => {
   console.log("Mongoose is connected 🦦");
 });
 
-// vercel
+// netlify
 app.use(
   cors({
     origin: "https://main--calm-eclair-804e4b.netlify.app/",
