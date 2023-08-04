@@ -19,10 +19,10 @@ mongoose.connection.on("connected", () => {
   console.log("Mongoose is connected 🦦");
 });
 
-// netlify
+// render
 app.use(
   cors({
-    origin: "https://main--calm-eclair-804e4b.netlify.app/",
+    origin: "https://sendero-client.onrender.com",
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
@@ -38,25 +38,6 @@ app.use("/api/users", userRoutes);
 
 //Job Routes
 app.use("/api/jobs", jobRoutes);
-
-//Render
-const allowedOrigins = [
-  "https://sendero-client.onrender.com",
-  "https://main--calm-eclair-804e4b.netlify.app/",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Check if the origin is in the allowed list; allow requests from all other origins with '*'
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
 
 // PORT
 app.listen(PORT, () => {
