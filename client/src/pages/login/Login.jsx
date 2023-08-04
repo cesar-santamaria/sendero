@@ -170,15 +170,6 @@ export default function Login() {
           </Paper>
         </Box>
       </Grow>
-      <Wave fill='#000'
-        paused={false}
-        options={{
-          height: 30,
-          amplitude: 50,
-          speed: 0.15,
-          points: 3
-        }}
-  />
     </>
   )
 }
