@@ -1,31 +1,31 @@
-const router = require('express').Router();
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const router = require("express").Router();
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 /* 
 Desc: Register new user
 Route: POST /api/users/
 access: Public
  */
-router.post('/register', async (req, res) => {
-  const { firstName, lastName, email, password } = req.body
+router.post("/register", async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
 
   if (!firstName || !lastName || !email || !password) {
-    res.status(400)
-    throw new Error('Please add required fields')
+    res.status(400);
+    throw new Error("Please add required fields");
   }
 
   // check if user already exists
-  const userExists = await User.findOne({ email })
+  const userExists = await User.findOne({ email });
   if (userExists) {
-    res.status(400)
-    throw new Error('User already exists')
+    res.status(400);
+    throw new Error("User already exists");
   }
 
   // Hash password
-  const salt = await bcrypt.genSalt(10)
-  const hashedPassword = await bcrypt.hash(password, salt)
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   // Create user
   const user = await User.create({
@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
     lastName,
     email,
     password: hashedPassword,
-  })
+  });
 
   if (user) {
     res.status(201).json({
@@ -41,38 +41,38 @@ router.post('/register', async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      token: generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
   } else {
-    res.status(200)
-    throw new Error('Invalid user data')
+    res.status(200);
+    throw new Error("Invalid user data");
   }
-})
+});
 
 /* 
 Desc: Authenticate user
 Route: POST /api/users/login
 access: Public
  */
-router.post('/login', async (req, res) => {
-  const {email, password} = req.body;
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
   // check for user email
-  const user = await User.findOne({email});
+  const user = await User.findOne({ email });
 
-  if (user && (await bcrypt.compare(password, user.password))){
+  if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      token: generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
   } else {
-    res.status(400)
-    throw new Error('Invalid credentials')
+    res.status(400);
+    throw new Error("Invalid credentials");
   }
-})
+});
 
 /* 
 Desc: Get user page
@@ -80,24 +80,23 @@ Route: GET /api/users/me
 access: Private
 */
 
-const { protect } = require('../middleware/auth')
-router.get('/me', protect, async (req, res) => {
-  const {_id, firstName, lastName ,email} = await User.findById(req.user.id);
-  
+const { protect } = require("../middleware/auth");
+router.get("/me", protect, async (req, res) => {
+  const { _id, firstName, lastName, email } = await User.findById(req.user.id);
+
   res.status(200).json({
     id: _id,
     firstName,
     lastName,
-    email
-  })
-})
-
+    email,
+  });
+});
 
 // Generate JWT Token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
-  })
-}
+  });
+};
 
-module.exports = router
+module.exports = router;

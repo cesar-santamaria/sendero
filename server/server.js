@@ -40,10 +40,23 @@ app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 
 //Render
-app.get("/", (req, res) => {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.send("Api is running..");
-});
+const allowedOrigins = [
+  "https://sendero-client.onrender.com",
+  "https://main--calm-eclair-804e4b.netlify.app/",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Check if the origin is in the allowed list; allow requests from all other origins with '*'
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 // PORT
 app.listen(PORT, () => {

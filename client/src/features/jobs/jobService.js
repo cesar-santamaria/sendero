@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://sendero-api.onrender.com/api/jobs/";
+const API_URL = "/api/jobs/";
 
 // create new job
 const createJob = async (jobData, token) => {
