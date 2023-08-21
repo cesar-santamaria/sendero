@@ -7,7 +7,7 @@ test@test.com
 ### Password:
 123456789
 
-### Link to project: https://sendero-job.herokuapp.com/
+### Link to project: https://sendero-client.onrender.com/
 
 ![Login screen](./docs/login.gif)
 ![Dashboard](./docs/dashboard.gif)
